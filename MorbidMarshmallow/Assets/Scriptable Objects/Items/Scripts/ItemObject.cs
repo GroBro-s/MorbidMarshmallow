@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum ItemType
@@ -12,6 +13,7 @@ public enum ItemType
 	Chest,
 	Default
 }
+
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/item")]
 public class ItemObject : ScriptableObject
 {
@@ -28,11 +30,7 @@ public class Item
 {
 	public string Name;
 	public int Id = -1;
-	public Item()
-	{
-		Name = "";
-		Id = -1;
-	}
+	public Item() { }
 	public Item(ItemObject item)
 	{
 		Name = item.name;
