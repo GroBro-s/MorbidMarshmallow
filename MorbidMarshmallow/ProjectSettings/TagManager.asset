@@ -38,6 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 2162397675
+    locked: 0
+  - name: Npc's
+    uniqueID: 2204128893
+    locked: 0
+  - name: Items
+    uniqueID: 3926527391
+    locked: 0
+  - name: Player
+    uniqueID: 1426530133
+    locked: 0
+  - name: Ground
+    uniqueID: 155343281
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

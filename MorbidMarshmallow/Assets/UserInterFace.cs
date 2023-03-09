@@ -5,20 +5,22 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using System;
+//using System;
+using JetBrains.Annotations;
+using System.Data.Common;
 
 public abstract class UserInterface : MonoBehaviour
 {
 	public InventoryObject inventory;
 	public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
+	private GameObject _player;
 
 	void Start()
 	{
-		//slotsOnInterface.UpdateSlotDisplay();
 		for (int i = 0; i < inventory.GetSlots.Length; i++)
 		{
 			inventory.GetSlots[i].parent = this;
-			inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
+			inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;;
 		}
 		CreateSlots();
 		AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
@@ -40,11 +42,6 @@ public abstract class UserInterface : MonoBehaviour
 			_slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = "";
 		}
 	}
-
-	//void Update()
-	//{
-	//	slotsOnInterface.UpdateSlotDisplay();
-	//}
 
 	public abstract void CreateSlots();
 
@@ -104,14 +101,70 @@ public abstract class UserInterface : MonoBehaviour
 
 		if(MouseData.interfaceMouseIsover == null)
 		{
-			slotsOnInterface[obj].RemoveItem();
-			return;
+			if (slotsOnInterface[obj].item.Id >= 0)
+			{
+				Item _item = slotsOnInterface[obj].item;
+				ItemObject itemObject = slotsOnInterface[obj].ItemObject;
+
+				GameObject _player = GameObject.FindGameObjectWithTag("Player");
+
+				for (int i = 0; i < slotsOnInterface[obj].amount; i++)
+				{
+					float offsetRange = Random.Range(-3f, 3f);
+
+					while(offsetRange > -1 && offsetRange < 1)
+					{
+						offsetRange = Random.Range(-3f, 3f);
+					}
+
+					//float randomOffset = 
+					//		offsetRange < 1 && offsetRange >= 0 ? offsetRange + 0.7f
+					//		: offsetRange > -1 && offsetRange < 0 ? offsetRange - 0.7f
+					//		: offsetRange;
+					Vector2 spawnPos = new Vector2(_player.transform.position.x + offsetRange, _player.transform.position.y);	
+
+					CreateNewGroundItem(_item, obj, itemObject, spawnPos);
+				}
+
+				slotsOnInterface[obj].RemoveItem();
+				return;
+			}
 		}
+
 		if(MouseData.slotHoveredOver)
 		{
 			InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsover.slotsOnInterface[MouseData.slotHoveredOver];
 			inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
 		}
+	}
+
+	public GameObject CreateNewGroundItem(Item _item, GameObject obj, ItemObject itemObject, Vector2 spawnPos)
+	{
+		var newGroundItem = new GameObject() { name = "Item" };
+
+		var groundItemObject = newGroundItem.AddComponent<GroundItem>();
+		newGroundItem.AddComponent<BoxCollider2D>();
+		newGroundItem.GetComponent<BoxCollider2D>().isTrigger = true;
+
+		groundItemObject.ItemData = _item;
+		groundItemObject.item = itemObject;
+		groundItemObject.amount = slotsOnInterface[obj].amount;
+		groundItemObject.transform.SetPositionAndRotation(spawnPos, Quaternion.identity);
+
+		CreateSpriteInChild(newGroundItem, itemObject);
+		return newGroundItem;
+	}
+
+	public void CreateSpriteInChild(GameObject parentObject, ItemObject itemObject)
+	{
+		var childObject = new GameObject() { name = "Sprite" };
+
+		childObject.AddComponent<SpriteRenderer>();
+		childObject.GetComponent<SpriteRenderer>().sprite = itemObject.uiDisplay;
+
+		childObject.transform.parent = parentObject.transform;
+		childObject.transform.position = parentObject.transform.position;
+		childObject.transform.localScale = new Vector3(4, 4, 1);
 	}
 
 	public void OnDrag(GameObject obj)

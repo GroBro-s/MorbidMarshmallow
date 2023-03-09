@@ -12,21 +12,28 @@ public class InventoryObject : ScriptableObject
 {
 	public string savePath;
 	public ItemDatabaseObject database;
-	public Inventory Container;
+	public InventoryContainer Container;
 	public InventorySlot[] GetSlots { get { return Container.Slots; } }
 
 	public bool AddItem(Item _item, int _amount)
 	{
-		if(EmptySlotCount <= 0)
-			return false;
 		InventorySlot slot = FindItemOnInventory(_item);
+
 		if (!database.ItemObjects[_item.Id].stackable || slot == null)
 		{
-			SetEmptySlot(_item, _amount); 
+			if (EmptySlotCount <= 0)
+				return false;
+			else
+			{
+				SetEmptySlot(_item, _amount);
+				return true;
+			}
+		}
+		else
+		{
+			slot.AddAmount(_amount);
 			return true;
 		}
-		slot.AddAmount(_amount);
-		return true;
 	}
 
 	public int EmptySlotCount
@@ -34,7 +41,7 @@ public class InventoryObject : ScriptableObject
 		get
 		{
 			int counter = 0;
-			for(int i = 0; i < GetSlots.Length; i++)
+			for (int i = 0; i < GetSlots.Length; i++)
 			{
 				if (GetSlots[i].item.Id <= -1)
 					counter++;
@@ -70,6 +77,11 @@ public class InventoryObject : ScriptableObject
 
 	public void SwapItems(InventorySlot item1, InventorySlot item2)
 	{
+		if (item1.item.Id == item2.item.Id && database.ItemObjects[item1.item.Id].stackable)
+		{
+			item1.amount += item2.amount;
+			item2.RemoveItem();
+		}
 		if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))
 		{
 			InventorySlot temp = new InventorySlot(item2.item, item2.amount);
@@ -92,12 +104,6 @@ public class InventoryObject : ScriptableObject
 	[ContextMenu("Save")]
 	public void Save()
 	{
-		//string saveData = JsonUtility.ToJson(this, true);
-		//BinaryFormatter bf = new BinaryFormatter();
-		//FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
-		//bf.Serialize(file, saveData);
-		//file.Close();
-
 		IFormatter formatter = new BinaryFormatter();
 		Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
 		formatter.Serialize(stream, Container);
@@ -107,16 +113,11 @@ public class InventoryObject : ScriptableObject
 	[ContextMenu("load")]
 	public void Load()
 	{
-		if(File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+		if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
 		{
-			//BinaryFormatter bf = new BinaryFormatter();
-			//FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
-			//JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
-			//file.Close();
-
 			IFormatter formatter = new BinaryFormatter();
 			Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-			Inventory newContainer = (Inventory)formatter.Deserialize(stream);
+			InventoryContainer newContainer = (InventoryContainer)formatter.Deserialize(stream);
 			for (int i = 0; i < GetSlots.Length; i++)
 			{
 				GetSlots[i].UpdateSlot(newContainer.Slots[i].item, newContainer.Slots[i].amount);
@@ -133,7 +134,7 @@ public class InventoryObject : ScriptableObject
 }
 
 [System.Serializable]
-public class Inventory
+public class InventoryContainer
 {
 	public InventorySlot[] Slots = new InventorySlot[24];
 	public void Clear()
@@ -166,7 +167,7 @@ public class InventorySlot
 	{
 		get
 		{
-			if(item.Id >= 0)
+			if (item.Id >= 0)
 			{
 				return parent.inventory.database.ItemObjects[item.Id];
 			}
@@ -205,8 +206,8 @@ public class InventorySlot
 	}
 
 	public bool CanPlaceInSlot(ItemObject _itemObject)
-	{ 
-		if(AllowedItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0)
+	{
+		if (AllowedItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0)
 			return true;
 		for (int i = 0; i < AllowedItems.Length; i++)
 		{
