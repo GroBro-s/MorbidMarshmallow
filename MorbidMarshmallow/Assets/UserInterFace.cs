@@ -1,30 +1,65 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Globalization;
 using TMPro;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.Events;
-//using System;
-using JetBrains.Annotations;
-using System.Data.Common;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public abstract class UserInterface : MonoBehaviour
 {
 	public InventoryObject inventory;
 	public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
-	private GameObject _player;
+
+	public Transform parent;
+	GameObject description;
+	public GameObject descriptionPrefab;
+	private Transform canvas;
+	private bool dragging = false;
+
+	TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
 
 	void Start()
 	{
+		CreateSlots();
 		for (int i = 0; i < inventory.GetSlots.Length; i++)
 		{
 			inventory.GetSlots[i].parent = this;
-			inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;;
+			inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate; ;
 		}
-		CreateSlots();
+
 		AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
 		AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+	}
+
+	private void Update()
+	{
+		if (description)
+		{
+			Vector2 _pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+			if (_pos.x > Screen.width - 10)
+				_pos.x = Input.mousePosition.x - 100;
+			else
+				_pos.x = Input.mousePosition.x + 60;
+
+			//if (_pos.y + 100 > Screen.height)
+			//	_pos.y = Screen.height - 100;
+			//else
+			//	_pos.y += 100;
+
+			description.transform.position = _pos;
+		}
+	}
+
+	public abstract void CreateSlots();
+
+	protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
+	{
+		EventTrigger trigger = obj.GetComponent<EventTrigger>();
+		var eventTrigger = new EventTrigger.Entry();
+		eventTrigger.eventID = type;
+		eventTrigger.callback.AddListener(action);
+		trigger.triggers.Add(eventTrigger);
 	}
 
 	private void OnSlotUpdate(InventorySlot _slot)
@@ -42,26 +77,28 @@ public abstract class UserInterface : MonoBehaviour
 			_slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = "";
 		}
 	}
-
-	public abstract void CreateSlots();
-
-	protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
-	{
-		EventTrigger trigger = obj.GetComponent<EventTrigger>();
-		var eventTrigger = new EventTrigger.Entry();
-		eventTrigger.eventID = type;
-		eventTrigger.callback.AddListener(action);
-		trigger.triggers.Add(eventTrigger);
-	}
-
 	public void OnEnter(GameObject obj)
 	{
 		MouseData.slotHoveredOver = obj;
+		if (!dragging)
+		{
+			InventorySlot hoveringItem = slotsOnInterface[obj];
+			if (hoveringItem.item.Id >= 0)
+			{
+				{
+					CreateDescription(hoveringItem);
+				}
+			}
+		}
 	}
 
 	public void OnExit(GameObject obj)
 	{
 		MouseData.slotHoveredOver = null;
+		if (description != null)
+		{
+			Destroy(description);
+		}
 	}
 
 	public void OnEnterInterface(GameObject obj)
@@ -97,9 +134,10 @@ public abstract class UserInterface : MonoBehaviour
 
 	public void OnDragEnd(GameObject obj)
 	{
+		dragging = false;
 		Destroy(MouseData.tempItemBeingDragged);
 
-		if(MouseData.interfaceMouseIsover == null)
+		if (MouseData.interfaceMouseIsover == null)
 		{
 			if (slotsOnInterface[obj].item.Id >= 0)
 			{
@@ -110,18 +148,13 @@ public abstract class UserInterface : MonoBehaviour
 
 				for (int i = 0; i < slotsOnInterface[obj].amount; i++)
 				{
-					float offsetRange = Random.Range(-3f, 3f);
+					float offsetRange = UnityEngine.Random.Range(-3f, 3f);
 
-					while(offsetRange > -1 && offsetRange < 1)
+					while (offsetRange > -1 && offsetRange < 1)
 					{
-						offsetRange = Random.Range(-3f, 3f);
+						offsetRange = UnityEngine.Random.Range(-3f, 3f);
 					}
-
-					//float randomOffset = 
-					//		offsetRange < 1 && offsetRange >= 0 ? offsetRange + 0.7f
-					//		: offsetRange > -1 && offsetRange < 0 ? offsetRange - 0.7f
-					//		: offsetRange;
-					Vector2 spawnPos = new Vector2(_player.transform.position.x + offsetRange, _player.transform.position.y);	
+					Vector2 spawnPos = new Vector2(_player.transform.position.x + offsetRange, _player.transform.position.y);
 
 					CreateNewGroundItem(_item, obj, itemObject, spawnPos);
 				}
@@ -131,7 +164,7 @@ public abstract class UserInterface : MonoBehaviour
 			}
 		}
 
-		if(MouseData.slotHoveredOver)
+		if (MouseData.slotHoveredOver)
 		{
 			InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsover.slotsOnInterface[MouseData.slotHoveredOver];
 			inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
@@ -169,10 +202,27 @@ public abstract class UserInterface : MonoBehaviour
 
 	public void OnDrag(GameObject obj)
 	{
-		if(MouseData.tempItemBeingDragged != null)
+		dragging = true;
+		if (MouseData.tempItemBeingDragged != null)
 		{
 			MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
 		}
+	}
+
+	void CreateDescription(InventorySlot hoveringItem)
+	{
+		Transform _trans;
+		if (parent == null)
+			_trans = canvas;
+		else
+			_trans = parent;
+
+		description = Instantiate(descriptionPrefab, Vector2.zero, Quaternion.identity, _trans);
+		var _item = hoveringItem.item;
+		var _description = hoveringItem.ItemObject.description;
+		var _uiDisplay = hoveringItem.ItemObject.uiDisplay;
+
+		description.GetComponent<Description>().AssignValues(_item.Name, _description , _uiDisplay);
 	}
 }
 

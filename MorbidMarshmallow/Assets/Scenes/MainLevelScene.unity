@@ -1346,6 +1346,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 1d99824d2de88164fbe5e5066c85482b, type: 2}
+  parent: {fileID: 1776856029}
+  descriptionPrefab: {fileID: 51691548516236411, guid: 32592c20018258a428998da3638f2fc1, type: 3}
   inventoryPrefab: {fileID: 8332319117625401570, guid: 9b22efc4a5be5ed4e869a5865a846aef, type: 3}
   X_START: -90
   Y_START: 160
@@ -3278,6 +3280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: ced60e1063ec7a9438d95ead10910147, type: 2}
+  parent: {fileID: 1776856029}
+  descriptionPrefab: {fileID: 51691548516236411, guid: 32592c20018258a428998da3638f2fc1, type: 3}
   slots:
   - {fileID: 1226598635}
   - {fileID: 106903819}

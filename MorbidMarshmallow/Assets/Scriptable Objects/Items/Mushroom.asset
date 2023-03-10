@@ -15,7 +15,7 @@ MonoBehaviour:
   uiDisplay: {fileID: 1630317256, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
   type: 6
-  description: 
+  description: test
   data:
-    Name: 
+    Name: MushRoom
     Id: 2

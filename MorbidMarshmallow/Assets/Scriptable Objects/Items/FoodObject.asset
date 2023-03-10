@@ -15,7 +15,7 @@ MonoBehaviour:
   uiDisplay: {fileID: 286251680, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
   type: 0
-  description: 
+  description: test
   data:
-    Name: 
+    Name: FoodObject
     Id: 0
