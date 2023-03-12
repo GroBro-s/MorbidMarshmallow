@@ -20,24 +20,29 @@ MonoBehaviour:
       item:
         Name: 
         Id: -1
+        Type: 0
       amount: 0
-    - AllowedItems: 02000000
+    - AllowedItems: 00000000
       item:
         Name: 
         Id: -1
+        Type: 0
       amount: 0
-    - AllowedItems: 02000000
+    - AllowedItems: 00000000
       item:
         Name: 
         Id: -1
+        Type: 0
       amount: 0
-    - AllowedItems: 06000000
+    - AllowedItems: 00000000
       item:
         Name: 
         Id: -1
+        Type: 0
       amount: 0
-    - AllowedItems: 06000000
+    - AllowedItems: 00000000
       item:
         Name: 
         Id: -1
+        Type: 0
       amount: 0

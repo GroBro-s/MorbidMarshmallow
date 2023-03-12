@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
 	public InventoryObject inventory;
 	public InventoryObject equipment;
+	public InventoryObject lickerInventory;
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		var item = collision.GetComponent<GroundItem>();
-		if(item)
+		var groundItem = collision.GetComponent<GroundItem>();
+		if(groundItem)
 		{
-			if(inventory.AddItem(new Item(item.item), 1))
+			if(inventory.AddItem(new Item(groundItem.itemObject.item), 1))
 			{
 				Destroy(collision.gameObject);
 			}
@@ -38,5 +37,6 @@ public class PlayerInventory : MonoBehaviour
 	{
 		inventory.Container.Clear();
 		equipment.Container.Clear();
+		lickerInventory.Container.Clear();
 	}
 }

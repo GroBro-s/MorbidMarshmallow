@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 1536526861, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 0
-  type: 2
+  type: 3
   description: A heavy weight can be dropped from a height to kill.
-  data:
-    Name: Heavy Weight
+  item:
+    Name: 
     Id: 1
+    Type: 0

@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
@@ -77,11 +73,12 @@ public class InventoryObject : ScriptableObject
 
 	public void SwapItems(InventorySlot item1, InventorySlot item2)
 	{
-		if (item1.item.Id == item2.item.Id && database.ItemObjects[item1.item.Id].stackable)
+		if (item1.item.Id == item2.item.Id && database.ItemObjects[item1.item.Id].stackable && item1 != item2) //item1 != item2 kan misschien verkeerde uitkomst geven omdat hij op onbekende manier vergelijkt.
 		{
 			item1.amount += item2.amount;
 			item2.RemoveItem();
 		}
+
 		if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))
 		{
 			InventorySlot temp = new InventorySlot(item2.item, item2.amount);
@@ -207,7 +204,7 @@ public class InventorySlot
 
 	public bool CanPlaceInSlot(ItemObject _itemObject)
 	{
-		if (AllowedItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0)
+		if (AllowedItems.Length <= 0 || _itemObject == null || _itemObject.item.Id < 0)
 			return true;
 		for (int i = 0; i < AllowedItems.Length; i++)
 		{

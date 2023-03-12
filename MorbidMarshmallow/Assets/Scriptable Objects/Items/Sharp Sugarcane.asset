@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 1366167560, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 0
-  type: 2
+  type: 1
   description: A sharp sugarcane can be user very well to stab yourself.
-  data:
-    Name: Sharp Sugarcane
+  item:
+    Name: 
     Id: 4
+    Type: 0

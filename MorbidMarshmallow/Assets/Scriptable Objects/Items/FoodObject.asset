@@ -17,6 +17,7 @@ MonoBehaviour:
   type: 0
   description: A foodItem can be used to heal yourself. Even though we really recommend
     not eating because you ofcourse want to die.
-  data:
-    Name: FoodObject
+  item:
+    Name: 
     Id: 0
+    Type: 0

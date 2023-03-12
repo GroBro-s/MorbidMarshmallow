@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 1630317256, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
-  type: 6
+  type: 4
   description: Mushroom are an ingredient in creating poisenous mushrooms.
-  data:
-    Name: MushRoom
+  item:
+    Name: 
     Id: 2
+    Type: 0

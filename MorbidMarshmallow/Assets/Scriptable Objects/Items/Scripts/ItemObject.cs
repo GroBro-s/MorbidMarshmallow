@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public enum ItemType
 {
+	SugarCane,
+	SharpSugarcane,
+	Weight,
+	HeavyWeight,
+	Mushroom,
+	PoisenousMushroom,
 	Food,
-	Helmet,
-	Weapon,
-	Shield,
-	Boots,
-	Chest,
 	Default
 }
 
@@ -22,7 +20,7 @@ public class ItemObject : ScriptableObject
 	public ItemType type;
 	[TextArea(15,20)]
 	public string description;
-	public Item data = new Item();
+	public Item item = new Item();
 }
 
 [System.Serializable]
@@ -30,10 +28,12 @@ public class Item
 {
 	public string Name;
 	public int Id = -1;
+	public ItemType Type;
 	public Item() { }
-	public Item(ItemObject item)
+	public Item(Item item)
 	{
-		Name = item.name;
-		Id = item.data.Id;
+		Name = item.Name;
+		Id = item.Id;
+		Type = item.Type;
 	}
 }
