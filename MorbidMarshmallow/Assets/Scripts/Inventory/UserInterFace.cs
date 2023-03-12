@@ -37,13 +37,13 @@ public abstract class UserInterface : MonoBehaviour
 		if (description)
 		{
 			Vector2 _pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-			if (_pos.x > Screen.width - 10)
+			if (_pos.x > Screen.width - 200)
 				_pos.x = Input.mousePosition.x - 100;
 			else
-				_pos.x = Input.mousePosition.x + 60;
+				_pos.x = Input.mousePosition.x + 100;
 
-			//if (_pos.y + 100 > Screen.height)
-			//	_pos.y = Screen.height - 100;
+			//if (_pos.y + 200 > Screen.height)
+			_pos.y = Input.mousePosition.y - 100;
 			//else
 			//	_pos.y += 100;
 
@@ -220,9 +220,9 @@ public abstract class UserInterface : MonoBehaviour
 		description = Instantiate(descriptionPrefab, Vector2.zero, Quaternion.identity, _trans);
 		var _item = hoveringItem.item;
 		var _description = hoveringItem.ItemObject.description;
-		var _uiDisplay = hoveringItem.ItemObject.uiDisplay;
+		//var _uiDisplay = hoveringItem.ItemObject.uiDisplay;
 
-		description.GetComponent<Description>().AssignValues(_item.Name, _description , _uiDisplay);
+		description.GetComponent<Description>().AssignValues(_description);  //_item.Name, , _uiDisplay
 	}
 }
 
