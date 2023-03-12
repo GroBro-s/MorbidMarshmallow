@@ -8,9 +8,9 @@ using TMPro;
 public class Description : MonoBehaviour
 {
 	//new is zelf toegevoegd, kan errors geven
-	public new TextMeshProUGUI name;
+	//public new TextMeshProUGUI name;
 	public TextMeshProUGUI description;
-	public Image item;
+	//public Image item;
 
 	public static Description Instance;
 
@@ -31,10 +31,10 @@ public class Description : MonoBehaviour
 		Instance = null;
 	}
 
-	public void AssignValues(string _name, string _description, Sprite _itemSprite)
+	public void AssignValues( string _description) //string _name, , Sprite _itemSprite
 	{
-		name.text = _name;
+		//name.text = _name;
 		description.text = _description;
-		item.sprite = _itemSprite;
+		//item.sprite = _itemSprite;
 	}
 }
