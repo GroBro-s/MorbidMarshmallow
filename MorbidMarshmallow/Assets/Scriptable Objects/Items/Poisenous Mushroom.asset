@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: -801248925, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 0
-  type: 2
+  type: 5
   description: Eat enough of these delicious looking little things and that will
     be another kill on the counter.
-  data:
-    Name: Poisenous Mushroom
+  item:
+    Name: 
     Id: 3
+    Type: 0

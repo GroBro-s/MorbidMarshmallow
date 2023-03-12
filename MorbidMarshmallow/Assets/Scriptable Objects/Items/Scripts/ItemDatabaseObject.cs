@@ -6,14 +6,15 @@ using UnityEngine;
 public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiver
 {
 	public ItemObject[] ItemObjects;
+	public ItemObject[] WeaponObjects;
 
 	[ContextMenu("Update ID's")]
 	public void UpdateID()
 	{
 		for (int i = 0; i < ItemObjects.Length; i++)
 		{
-			if (ItemObjects[i].data.Id != i)
-				ItemObjects[i].data.Id = i;
+			if (ItemObjects[i].item.Id != i)
+				ItemObjects[i].item.Id = i;
 		}
 	}
 
@@ -21,7 +22,7 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
 	{
 		foreach (var itemObject in ItemObjects)
 		{
-			if(itemObject.data.Id == id)
+			if(itemObject.item.Id == id)
 				return itemObject;
 		}
 		return null;

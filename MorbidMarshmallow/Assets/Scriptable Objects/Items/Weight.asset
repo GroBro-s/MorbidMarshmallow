@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 868489143, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
-  type: 6
+  type: 2
   description: Add enough of these weights together to make a really heavy, dangerous,
     big weight.
-  data:
-    Name: Weight
+  item:
+    Name: 
     Id: 6
+    Type: 0
