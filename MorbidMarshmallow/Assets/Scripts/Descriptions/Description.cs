@@ -1,17 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-
 
 public class Description : MonoBehaviour
 {
-	//new is zelf toegevoegd, kan errors geven
-	//public new TextMeshProUGUI name;
 	public TextMeshProUGUI description;
-	//public Image item;
-
 	public static Description Instance;
 
 	private void Start()
@@ -31,10 +23,33 @@ public class Description : MonoBehaviour
 		Instance = null;
 	}
 
-	public void AssignValues( string _description) //string _name, , Sprite _itemSprite
+	public static GameObject Create(UserInterface userInterface, InventorySlot hoveringItem)
 	{
-		//name.text = _name;
+		var _trans = userInterface.parent;
+		var _description = hoveringItem.ItemObject.description;
+		//var _item = hoveringItem.item;
+
+		var description = Instantiate(userInterface.descriptionPrefab, Vector2.zero, Quaternion.identity, _trans);
+		//var _uiDisplay = hoveringItem.ItemObject.uiDisplay;
+
+		description.GetComponent<Description>().AssignValues(_description);  //_item.Name, , _uiDisplay
+
+		return description;
+	}
+
+
+	public void AssignValues( string _description) 
+	{
 		description.text = _description;
+		
+		//string _name, , Sprite _itemSprite
+		//name.text = _name;
 		//item.sprite = _itemSprite;
+	}
+
+	public static void DestroyDescription(GameObject description)
+	{
+		if (description != null) 
+			Destroy(description);
 	}
 }

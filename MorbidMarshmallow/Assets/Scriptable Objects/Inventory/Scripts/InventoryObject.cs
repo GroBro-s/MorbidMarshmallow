@@ -1,7 +1,11 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
@@ -212,5 +216,33 @@ public class InventorySlot
 				return true;
 		}
 		return false;
+	}
+}
+
+public static class ExtensionMethods
+{
+	public static void UpdateSlotsDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
+	{
+		foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
+		{
+			var slot = _slot.Value;
+			slot.UpdateSlotDisplay();
+		}
+	}
+
+	public static void UpdateSlotDisplay(this InventorySlot slot)
+	{
+		if (slot.item.Id >= 0)
+		{
+			slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = slot.ItemObject.uiDisplay;
+			slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+			slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount == 1 ? "" : slot.amount.ToString("n0");
+		}
+		else
+		{
+			slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+			slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(0, 0, 0, 0);
+			slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>().text = "";
+		}
 	}
 }

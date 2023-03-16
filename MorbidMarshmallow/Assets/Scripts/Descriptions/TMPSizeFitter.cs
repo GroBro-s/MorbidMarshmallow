@@ -4,8 +4,8 @@ using UnityEngine;
 public class TMPSizeFitter : MonoBehaviour
 {
 	public GameObject backGround;
-	public GameObject pivotPoint;
-	public GameObject description;
+	//public GameObject pivotPoint;
+	//public GameObject description;
 	public float finalPrefferedHeight;
 	[SerializeField]
 	private TMPro.TextMeshProUGUI m_TextMeshPro;
@@ -20,34 +20,19 @@ public class TMPSizeFitter : MonoBehaviour
 				return m_TextMeshPro;
 		}
 	}
-
 	private RectTransform m_RectTransform;
 	public RectTransform rectTransform { 
 		get 
-		{ 
-			if(m_RectTransform == null)
-			{
-				m_RectTransform =  backGround.GetComponent<RectTransform>();
-			}
+		{
+			if (m_RectTransform == null)
+				m_RectTransform = backGround.GetComponent<RectTransform>();
 			return m_RectTransform;
 		}
 	}
-
 	private RectTransform m_TMPrectTransform;
-
 	public RectTransform TMPrectTransform { get { return m_TMPrectTransform; } }
-
 	private float m_PreferredHeight;
-
 	public float PreferredHeight { get { return m_PreferredHeight; } }
-
-	private void SetHeight()
-	{
-		if(TextMeshPro == null)
-			return;
-		m_PreferredHeight = TextMeshPro.preferredHeight;
-		rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, m_PreferredHeight + 50);
-	}
 
 	private void OnEnable()
 	{
@@ -65,5 +50,13 @@ public class TMPSizeFitter : MonoBehaviour
 		{
 			SetHeight();
 		}
+	}
+	
+	private void SetHeight()
+	{
+		if(TextMeshPro == null)
+			return;
+		m_PreferredHeight = TextMeshPro.preferredHeight;
+		rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, m_PreferredHeight + 50);
 	}
 }
