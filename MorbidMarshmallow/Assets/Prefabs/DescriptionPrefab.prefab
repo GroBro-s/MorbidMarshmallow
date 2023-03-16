@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3681270916455237831}
   - component: {fileID: 5542011376108765433}
   - component: {fileID: 6864661624064931099}
-  - component: {fileID: 7782089122618056132}
   - component: {fileID: 6002166725033887614}
+  - component: {fileID: -2539442719250167575}
   m_Layer: 5
   m_Name: DescriptionPrefab
   m_TagString: Untagged
@@ -62,19 +62,6 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &7782089122618056132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51691548516236411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44321f67979bf504ea29486bf1ef70f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: {fileID: 5677041131101936750}
 --- !u!114 &6002166725033887614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +79,19 @@ MonoBehaviour:
   description: {fileID: 5427098514040202471}
   finalPrefferedHeight: 0
   m_TextMeshPro: {fileID: 5677041131101936750}
+--- !u!114 &-2539442719250167575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51691548516236411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44321f67979bf504ea29486bf1ef70f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: {fileID: 5677041131101936750}
 --- !u!1 &131605176159409003
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 183410963571628985}
   - component: {fileID: 1932077003235267119}
   m_Layer: 5
-  m_Name: BackGround(new)
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 6398826916174240557}
   - component: {fileID: 8944931198422147323}
   m_Layer: 5
-  m_Name: Description(new)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
