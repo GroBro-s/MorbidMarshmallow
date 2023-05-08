@@ -1,3 +1,8 @@
+/*
+* Grobros
+* https://github.com/GroBro-s
+*/
+
 using UnityEngine;
 
 public enum ItemType
@@ -13,24 +18,20 @@ public enum ItemType
 }
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/item")]
+[System.Serializable]
 public class ItemObject : ScriptableObject
 {
-	public Sprite uiDisplay;
-	public bool stackable;
-	public ItemType type;
-	[TextArea(15,20)]
-	public string description;
-	public Item item = new Item();
-}
-
-[System.Serializable]
-public class Item
-{
+	public Sprite UiDisplay;
+	public bool Stackable;
 	public string Name;
 	public int Id = -1;
 	public ItemType Type;
-	public Item() { }
-	public Item(Item item)
+	[TextArea(15, 20)]
+	public string description;
+
+	public ItemObject() { }
+
+	public ItemObject(ItemObject item)
 	{
 		Name = item.Name;
 		Id = item.Id;

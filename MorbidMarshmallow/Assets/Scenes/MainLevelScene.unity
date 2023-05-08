@@ -192,16 +192,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 39674001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: c6fd9c42bff015d49947309ec5dcf1b0, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &63585416
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,13 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: ac6c7dd843a7cfb4589158b92072c70c, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &89633537
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,13 +655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: c6fd9c42bff015d49947309ec5dcf1b0, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &464933579
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,13 +878,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: 95e43bb1d95566d49bbe16d331f964b8, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &543323939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,13 +1421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: f6e464f1f46a4b8438996a1f44f53a99, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &858910934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,13 +1798,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: 95e43bb1d95566d49bbe16d331f964b8, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &900541946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,16 +2038,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1053967842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: e0f5e8f6f67c4924ab2fb93afdc96d29, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!4 &1053967845
 Transform:
   m_ObjectHideFlags: 0
@@ -3222,13 +3173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: e0f5e8f6f67c4924ab2fb93afdc96d29, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &1699325240
 GameObject:
   m_ObjectHideFlags: 0
@@ -3301,13 +3245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: 95e43bb1d95566d49bbe16d331f964b8, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1001 &1749717996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3851,8 +3788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 543323939}
-  playerInventory: {fileID: 11400000, guid: 1d99824d2de88164fbe5e5066c85482b, type: 2}
-  lickerInventory: {fileID: 11400000, guid: c496821b89c482c42a526e8c281f8f19, type: 2}
+  inventoryObject: {fileID: 0}
   database: {fileID: 11400000, guid: 3fe7382cca9e1384ea4d778fad974d4a, type: 2}
 --- !u!1 &1939555299
 GameObject:
@@ -3926,13 +3862,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: f6e464f1f46a4b8438996a1f44f53a99, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &1952642423
 GameObject:
   m_ObjectHideFlags: 0
@@ -4005,13 +3934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8416d6396dde145bdaf84e662f7a10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: 0f260beb6404a8d48846a5f1c75ae0ea, type: 2}
-  item:
-    Name: 
-    Id: -1
-    Type: 0
-  amount: 1
-  looted: 0
 --- !u!1 &2063607825
 GameObject:
   m_ObjectHideFlags: 0

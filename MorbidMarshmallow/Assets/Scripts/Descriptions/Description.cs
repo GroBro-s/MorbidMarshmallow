@@ -1,15 +1,19 @@
 using UnityEngine;
 using TMPro;
+using Inventory;
 
 public class Description : MonoBehaviour
 {
 	public TextMeshProUGUI description;
 	public static Description Instance;
 
+
 	private void Start()
 	{
 		if (Instance == null)
+		{
 			Instance = this;
+		}
 		else
 		{
 			print("Error: There are multiple descriptions present, deleting old one");
@@ -37,7 +41,6 @@ public class Description : MonoBehaviour
 		return description;
 	}
 
-
 	public void AssignValues( string _description) 
 	{
 		description.text = _description;
@@ -49,7 +52,9 @@ public class Description : MonoBehaviour
 
 	public static void DestroyDescription(GameObject description)
 	{
-		if (description != null) 
+		if (description != null)
+		{
 			Destroy(description);
+		}
 	}
 }

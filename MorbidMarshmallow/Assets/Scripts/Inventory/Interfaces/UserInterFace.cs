@@ -1,3 +1,9 @@
+/*
+* Grobros
+* https://github.com/GroBro-s
+*/
+
+using Inventory;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,10 +24,10 @@ public abstract class UserInterface : MonoBehaviour
 	void Start()
 	{
 		CreateSlots();
-		for (int i = 0; i < inventory.GetSlots.Length; i++)
+		for (int i = 0; i < inventory.Slots.Length; i++)
 		{
-			inventory.GetSlots[i].parent = this;
-			inventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
+			inventory.Slots[i].parent = this;
+			inventory.Slots[i].OnAfterUpdate += OnSlotUpdate;
 		}
 
 		AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
@@ -71,8 +77,10 @@ public abstract class UserInterface : MonoBehaviour
 		MouseData.slotHoveredOver = obj;
 		if (!_dragging)
 		{
-			InventorySlot hoveringItem = slotsOnInterface[obj];
-			if (hoveringItem.item.Id >= 0)
+			var hoveringItem = slotsOnInterface[obj];
+			var itemObject = hoveringItem.ItemObject;
+
+			if (itemObject.Id >= 0)
 				_description = Description.Create(this, hoveringItem);
 		}
 	}
@@ -101,15 +109,18 @@ public abstract class UserInterface : MonoBehaviour
 
 	public void OnDragEnd(GameObject obj)
 	{
+		var slot = slotsOnInterface[obj];
+		var itemObject = slot.ItemObject;
+
 		_dragging = false;
 		Destroy(MouseData.tempItemBeingDragged);
 
-		if (MouseData.interfaceMouseIsover == null && slotsOnInterface[obj].item.Id >= 0) //Goede aanpassing? (in plaats van 2 if's)
+		if (MouseData.interfaceMouseIsover == null && itemObject.Id >= 0) //Goede aanpassing? (in plaats van 2 if's)
 		{
-			for (int i = 0; i < slotsOnInterface[obj].amount; i++)
-				GroundItem.Create(slotsOnInterface[obj]);
+			for (int i = 0; i < slot.amount; i++)
+				GroundItem.Create(itemObject);
 
-			slotsOnInterface[obj].RemoveItem();
+			slot.RemoveItem();
 			return;
 		}
 
