@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92a81e05d6953064b818a83cb9ef56d5, type: 3}
-  m_Name: PlayerInventory
+  m_Name: New Inventory
   m_EditorClassIdentifier: 
   savePath: 
-  database: {fileID: 11400000, guid: 3fe7382cca9e1384ea4d778fad974d4a, type: 2}
+  database: {fileID: 0}
   Slots:
-  - AllowedItems: 00000000
+  - AllowedItems: 
     amount: 0
   - AllowedItems: 
     amount: 0

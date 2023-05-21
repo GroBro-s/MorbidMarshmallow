@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &39674002
 Transform:
   m_ObjectHideFlags: 0
@@ -212,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &63585417
 Transform:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &405451596
 Transform:
   m_ObjectHideFlags: 0
@@ -823,7 +823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &529555170
 Transform:
   m_ObjectHideFlags: 0
@@ -893,7 +893,7 @@ GameObject:
   - component: {fileID: 543323940}
   m_Layer: 5
   m_Name: LickerInventory
-  m_TagString: Untagged
+  m_TagString: Inventory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78de18f30d6a554290a4570ea3ca52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: c496821b89c482c42a526e8c281f8f19, type: 2}
+  inventory: {fileID: 11400000, guid: 73bcaee188607a848a95be30edbba23a, type: 2}
   parent: {fileID: 1776856029}
   descriptionPrefab: {fileID: 51691548516236411, guid: 32592c20018258a428998da3638f2fc1, type: 3}
   inventoryPrefab: {fileID: 8332319117625401570, guid: 9b22efc4a5be5ed4e869a5865a846aef, type: 3}
@@ -1366,7 +1366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &685181689
 Transform:
   m_ObjectHideFlags: 0
@@ -1436,7 +1436,7 @@ GameObject:
   - component: {fileID: 858910940}
   m_Layer: 5
   m_Name: InventoryScreen
-  m_TagString: Untagged
+  m_TagString: Inventory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1511,7 +1511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78de18f30d6a554290a4570ea3ca52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: 1d99824d2de88164fbe5e5066c85482b, type: 2}
+  inventory: {fileID: 11400000, guid: 7db3789230b8c1f4b9a0a3ac7afe30c5, type: 2}
   parent: {fileID: 1776856029}
   descriptionPrefab: {fileID: 51691548516236411, guid: 32592c20018258a428998da3638f2fc1, type: 3}
   inventoryPrefab: {fileID: 8332319117625401570, guid: 9b22efc4a5be5ed4e869a5865a846aef, type: 3}
@@ -1652,9 +1652,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c83656eee6c4e46b3042fbd1a82ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: 1d99824d2de88164fbe5e5066c85482b, type: 2}
-  equipment: {fileID: 11400000, guid: ced60e1063ec7a9438d95ead10910147, type: 2}
-  lickerInventory: {fileID: 11400000, guid: c496821b89c482c42a526e8c281f8f19, type: 2}
+  playerInventory: {fileID: 11400000, guid: 7db3789230b8c1f4b9a0a3ac7afe30c5, type: 2}
+  equipmentInventory: {fileID: 11400000, guid: adfdd5a443573e146824f389036768e2, type: 2}
+  lickerInventory: {fileID: 11400000, guid: 73bcaee188607a848a95be30edbba23a, type: 2}
 --- !u!1 &872459277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,7 +1743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &895931449
 Transform:
   m_ObjectHideFlags: 0
@@ -2038,9 +2038,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1053967842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 104f0383c07e0f04f9ea922cba45d30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  looted: 0
 --- !u!4 &1053967845
 Transform:
   m_ObjectHideFlags: 0
@@ -3118,7 +3119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1678266918
 Transform:
   m_ObjectHideFlags: 0
@@ -3190,7 +3191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1699325241
 Transform:
   m_ObjectHideFlags: 0
@@ -3460,7 +3461,7 @@ GameObject:
   - component: {fileID: 1840486747}
   m_Layer: 5
   m_Name: EquipmentScreen
-  m_TagString: Untagged
+  m_TagString: Inventory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3502,7 +3503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1ed2b6c2586cd4a9293052e7f56ff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: ced60e1063ec7a9438d95ead10910147, type: 2}
+  inventory: {fileID: 11400000, guid: adfdd5a443573e146824f389036768e2, type: 2}
   parent: {fileID: 1776856029}
   descriptionPrefab: {fileID: 51691548516236411, guid: 32592c20018258a428998da3638f2fc1, type: 3}
   slots:
@@ -3787,8 +3788,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e93e3965f64bef48baa0c3438b39bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 543323939}
-  inventoryObject: {fileID: 0}
+  lickerInventory: {fileID: 0}
+  inventoryObject: {fileID: 11400000, guid: 73bcaee188607a848a95be30edbba23a, type: 2}
   database: {fileID: 11400000, guid: 3fe7382cca9e1384ea4d778fad974d4a, type: 2}
 --- !u!1 &1939555299
 GameObject:
@@ -3807,7 +3808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1939555300
 Transform:
   m_ObjectHideFlags: 0
@@ -3879,7 +3880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1952642424
 Transform:
   m_ObjectHideFlags: 0

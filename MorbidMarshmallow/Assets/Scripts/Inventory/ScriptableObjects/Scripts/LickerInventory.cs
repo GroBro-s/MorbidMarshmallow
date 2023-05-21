@@ -5,7 +5,6 @@
 
 using Inventory;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LickerInventory : MonoBehaviour
@@ -17,8 +16,8 @@ public class LickerInventory : MonoBehaviour
 		{ItemType.Mushroom, ItemType.PoisenousMushroom}
 	};
 
-	public GameObject inventory;
-	public InventoryObject inventoryObject;
+	public GameObject lickerInventory;
+	public InventorySO inventoryObject;
 	public ScriptableObject database;
 
 	public void Update()
@@ -28,37 +27,43 @@ public class LickerInventory : MonoBehaviour
 			var slot = inventoryObject.Slots[i];
 			var itemObject = slot.ItemObject;
 
-			if (itemObject.Id >= 0)
+			if (itemObject != null && itemObject.Item.Id >= 0)
 			{
+				MakeGroundItem(slot);
+				
 				//var newItemType = lickableItems[item.Type];
 				//slot.item.Type = newItemType;
 
-				GroundItem.Create(slot.ItemObject);
-				slot.RemoveItem();
 				////var amount = lickerInventory.GetAmount(i);
 				//item.Type = newItemType;
 
 			}
 		}
 	}
-
-	public void GetNewItemData(ItemObject itemObject)
+	
+	private void MakeGroundItem(InventorySlot slot)
 	{
-		if (itemObject.Id >= 0)
-		{
-			
-		}
-		//normalDatabase.ItemObjects[inputItem].item
+		GroundItem.Create(slot.ItemObject);
+		slot.ClearSlot();
 	}
+
+	//public void GetNewItemData(ItemSO itemObject)
+	//{
+	//	if (itemObject.id >= 0)
+	//	{
+			
+	//	}
+	//	//normalDatabase.ItemObjects[inputItem].item
+	//}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		inventory.SetActive(true);
+		lickerInventory.SetActive(true);
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		inventory.SetActive(false);
+		lickerInventory.SetActive(false);
 		//InventoryContainer.Clear();
 	}
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 {
-	public ItemObject itemObject;
+	[SerializeField]
+	public ItemSO itemSO;
 	//public int amount = 1;
 	public bool looted = false;
 
-	public GroundItem(ItemObject item)
+	public GroundItem(ItemSO itemSO)
 	{ 
-		this.itemObject = item;
+		this.itemSO = itemSO;
 	}
 
 	public void OnAfterDeserialize()
@@ -21,28 +22,29 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 	public void OnBeforeSerialize()
 	{
 #if UNITY_EDITOR
-		GetComponentInChildren<SpriteRenderer>().sprite = itemObject.UiDisplay;
+		GetComponentInChildren<SpriteRenderer>().sprite = itemSO.sprite;
 		EditorUtility.SetDirty(GetComponentInChildren<SpriteRenderer>());
 #endif
 	}
 
-	public static GameObject Create(ItemObject itemObject)
+	public static GameObject Create(ItemSO itemSO)
 	{
-		var newGroundItem = CreateNewGroundItem(itemObject);
+		var newGroundItem = CreateNewGroundItem(itemSO);
 		var spawnPos = SetSpawnPosition();
 		newGroundItem.transform.SetPositionAndRotation(spawnPos, Quaternion.identity);
 
-		CreateSpriteInChild(newGroundItem, itemObject);
+		CreateSpriteInChild(newGroundItem, itemSO);
 
 		return newGroundItem;
 	}
 
-	private static void CreateSpriteInChild(GameObject groundItem, ItemObject itemObject) //GameObject groundItem, ItemObject itemObject
+	private static void CreateSpriteInChild(GameObject groundItem, ItemSO itemSO) //GameObject groundItem, ItemObject itemObject
 	{
 		var childObject = new GameObject() { name = "Sprite" };
 
 		childObject.AddComponent<SpriteRenderer>();
-		childObject.GetComponent<SpriteRenderer>().sprite = itemObject.UiDisplay;
+		childObject.GetComponent<SpriteRenderer>().sprite = itemSO
+			.sprite;
 		childObject.GetComponent<SpriteRenderer>().sortingLayerName = "Items";
 
 		childObject.transform.parent = groundItem.transform;
@@ -50,7 +52,7 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 		childObject.transform.localScale = new Vector3(4, 4, 1);
 	}
 
-	private static GameObject CreateNewGroundItem(ItemObject itemObject)
+	private static GameObject CreateNewGroundItem(ItemSO itemSO)
 	{
 		var newGroundItem = new GameObject { name = "Item" };
 		newGroundItem.transform.parent = GameObject.Find("Collectables").transform;
@@ -58,7 +60,7 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 		newGroundItem.GetComponent<BoxCollider2D>().isTrigger = true;
 
 		var groundItemObject = newGroundItem.AddComponent<GroundItem>();
-		groundItemObject.itemObject = itemObject;
+		groundItemObject.itemSO = itemSO;
 		//groundItemObject.amount = slot.amount;
 
 		return newGroundItem;

@@ -22,6 +22,7 @@ namespace Inventory
 		public ItemObject ItemObject { get; set; }
 		public int amount;
 
+		#region GetSetItemObject
 		//public ItemObject ItemObject
 		//{
 		//	get
@@ -33,30 +34,28 @@ namespace Inventory
 		//		return null;
 		//	}
 		//}
-		public InventorySlot()
+		#endregion
+
+		//kan deze weg?
+		public InventorySlot(ItemObject itemObject, int amount)
 		{
-			UpdateSlot(new ItemObject(), 0);
+			UpdateSlot(itemObject, amount);
 		}
 
-		public InventorySlot(ItemObject itemObject, int _amount)
-		{
-			UpdateSlot(itemObject, _amount);
-		}
-
-		public void UpdateSlot(ItemObject itemObject, int _amount)
+		public void UpdateSlot(ItemObject itemObject, int amount)
 		{
 			OnBeforeUpdate?.Invoke(this);
 
 			ItemObject = itemObject;
-			amount = _amount;
+			this.amount = amount;
 
 			OnAfterUpdate?.Invoke(this);
 			//kan beter?
 		}
 
-		public void RemoveItem()
+		public void ClearSlot()
 		{
-			UpdateSlot(new ItemObject(), 0);
+			UpdateSlot(null, 0);
 		}
 
 		public void AddAmount(int value)
@@ -64,24 +63,23 @@ namespace Inventory
 			UpdateSlot(ItemObject, amount += value);
 		}
 
-		public bool CanPlaceInSlot(ItemObject _itemObject)
+		public bool IsAllowedInSlot(ItemObject itemObject)
 		{
-			if (AllowedItems.Length <= 0 || _itemObject == null || _itemObject.Id < 0)
+			var hasItem = AllowedItems.Length > 0 || itemObject != null || itemObject.Item.Id >= 0;
+			
+			return hasItem ? CheckAllowedItems(itemObject) : true;
+		}
+
+		private bool CheckAllowedItems(ItemObject itemObject)
+		{
+			for (int i = 0; i < AllowedItems.Length; i++)
 			{
-				return true;
-			}
-			else
-			{
-				for (int i = 0; i < AllowedItems.Length; i++)
+				if (itemObject.Item.Type == AllowedItems[i])
 				{
-					if (_itemObject.Type == AllowedItems[i])
-						return true;
+					return true;
 				}
-				return false;
 			}
+			return false;
 		}
 	}
 }
-
-
-//REGEL 61!! en 40!!

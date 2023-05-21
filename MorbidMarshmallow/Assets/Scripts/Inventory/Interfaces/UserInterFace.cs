@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 
 public abstract class UserInterface : MonoBehaviour
 {
-	public InventoryObject inventory;
+	public InventorySO inventory;
 	public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
 	//Used in/came from Description
@@ -24,36 +24,56 @@ public abstract class UserInterface : MonoBehaviour
 	void Start()
 	{
 		CreateSlots();
-		for (int i = 0; i < inventory.Slots.Length; i++)
-		{
-			inventory.Slots[i].parent = this;
-			inventory.Slots[i].OnAfterUpdate += OnSlotUpdate;
-		}
+		SetSlotInfo();
 
-		AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
-		AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
+		AddEvents();
 	}
 
 	private void Update()
 	{
 		if (_description)
 		{
-			var _pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
-			if (_pos.x > Screen.width - 200)
-				_pos.x = Input.mousePosition.x - 100;
-			else
-				_pos.x = Input.mousePosition.x + 100;
-
-			_pos.y = Input.mousePosition.y - 100;
-			
-			_description.transform.position = _pos;
-
-
-			//if (_pos.y + 200 > Screen.height)
-			//else
-			//	_pos.y += 100;
+			SetDescriptionPosition();
 		}
+	}
+
+	private void SetDescriptionPosition()
+	{
+		var pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+		if (pos.x > Screen.width - 200)
+		{
+			pos.x = Input.mousePosition.x - 100;
+		}
+		else
+		{
+			pos.x = Input.mousePosition.x + 100;
+		}
+
+		pos.y = Input.mousePosition.y - 100;
+
+		_description.transform.position = pos;
+
+
+		//if (pos.y + 200 > Screen.height)
+		//else
+		//	pos.y += 100;
+	}
+
+	//?naam
+	private void SetSlotInfo()
+	{
+		for (int i = 0; i < inventory.Slots.Length; i++)
+		{
+			inventory.Slots[i].parent = this;
+			inventory.Slots[i].OnAfterUpdate += OnSlotUpdate;
+		}
+	}
+
+	private void AddEvents()
+	{
+		AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
+		AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
 	}
 
 	public abstract void CreateSlots();
@@ -78,9 +98,9 @@ public abstract class UserInterface : MonoBehaviour
 		if (!_dragging)
 		{
 			var hoveringItem = slotsOnInterface[obj];
-			var itemObject = hoveringItem.ItemObject;
+			var hoveringItemObject = hoveringItem.ItemObject;
 
-			if (itemObject.Id >= 0)
+			if (hoveringItemObject.Item.Id >= 0)
 				_description = Description.Create(this, hoveringItem);
 		}
 	}
@@ -115,19 +135,20 @@ public abstract class UserInterface : MonoBehaviour
 		_dragging = false;
 		Destroy(MouseData.tempItemBeingDragged);
 
-		if (MouseData.interfaceMouseIsover == null && itemObject.Id >= 0) //Goede aanpassing? (in plaats van 2 if's)
+		if (MouseData.interfaceMouseIsover == null && itemObject.Item.Id >= 0) //Goede aanpassing? (in plaats van 2 if's)
 		{
 			for (int i = 0; i < slot.amount; i++)
+			{
 				GroundItem.Create(itemObject);
+			}
 
-			slot.RemoveItem();
+			slot.ClearSlot();
 			return;
 		}
 
 		if (MouseData.slotHoveredOver)
 		{
-			InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsover.slotsOnInterface[MouseData.slotHoveredOver];
-			inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+			SwapItems(slot);
 		}
 	}
 
@@ -135,6 +156,15 @@ public abstract class UserInterface : MonoBehaviour
 	{
 		_dragging = true;
 		if (MouseData.tempItemBeingDragged != null)
+		{
 			MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
+		}
+	}
+
+	private void SwapItems(InventorySlot slot)
+	{
+		InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsover.slotsOnInterface[MouseData.slotHoveredOver];
+		
+		inventory.SwapSlots(slot, mouseHoverSlotData);
 	}
 }
