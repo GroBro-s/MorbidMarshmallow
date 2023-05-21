@@ -1,15 +1,24 @@
+/*
+* Grobros
+* https://github.com/GroBro-s
+*/
+
 using UnityEngine;
 using TMPro;
+using Inventory;
 
 public class Description : MonoBehaviour
 {
 	public TextMeshProUGUI description;
 	public static Description Instance;
 
+
 	private void Start()
 	{
 		if (Instance == null)
+		{
 			Instance = this;
+		}
 		else
 		{
 			print("Error: There are multiple descriptions present, deleting old one");
@@ -25,18 +34,16 @@ public class Description : MonoBehaviour
 
 	public static GameObject Create(UserInterface userInterface, InventorySlot hoveringItem)
 	{
-		var _trans = userInterface.parent;
-		var _description = hoveringItem.ItemObject.description;
-		//var _item = hoveringItem.item;
+		var parent = userInterface.parent;
+		var itemDescription = hoveringItem.ItemObject.Item.Description;
 
-		var description = Instantiate(userInterface.descriptionPrefab, Vector2.zero, Quaternion.identity, _trans);
+		var description = Instantiate(userInterface.descriptionPrefab, Vector2.zero, Quaternion.identity, parent);
 		//var _uiDisplay = hoveringItem.ItemObject.uiDisplay;
 
-		description.GetComponent<Description>().AssignValues(_description);  //_item.Name, , _uiDisplay
+		description.GetComponent<Description>().AssignValues(itemDescription);  //_item.Name, , _uiDisplay
 
 		return description;
 	}
-
 
 	public void AssignValues( string _description) 
 	{
@@ -49,7 +56,9 @@ public class Description : MonoBehaviour
 
 	public static void DestroyDescription(GameObject description)
 	{
-		if (description != null) 
+		if (description != null)
+		{
 			Destroy(description);
+		}
 	}
 }

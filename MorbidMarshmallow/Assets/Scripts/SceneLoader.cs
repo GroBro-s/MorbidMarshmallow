@@ -1,3 +1,8 @@
+/*
+* Grobros
+* https://github.com/GroBro-s
+*/
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +13,6 @@ public class SceneLoader : MonoBehaviour
 {
 	public GameObject loadingScreen;
 	public Slider slider;
-	[SerializeField]
 	public TextMeshProUGUI progressText;
 
 	IEnumerator LoadAsynchronously(int scene)
@@ -19,13 +23,18 @@ public class SceneLoader : MonoBehaviour
 
 		while(!operation.isDone)
 		{
-			float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
-			slider.value = progress;
-			progressText.text = progress * 100f + "%";
+			UpdateLoadingInformation(operation);
 
 			yield return null;
 		}
+	}
+
+	private void UpdateLoadingInformation(AsyncOperation operation)
+	{
+		float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+		slider.value = progress;
+		progressText.text = progress * 100f + "%";
 	}
 
 	public void LoadMainLevelScene()

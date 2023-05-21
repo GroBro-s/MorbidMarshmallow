@@ -1,6 +1,6 @@
 /*
 * Grobros
-* https://github.com/GroBro-s/MorbidMarshmallow
+* https://github.com/GroBro-s
 */
 using UnityEngine;
 
