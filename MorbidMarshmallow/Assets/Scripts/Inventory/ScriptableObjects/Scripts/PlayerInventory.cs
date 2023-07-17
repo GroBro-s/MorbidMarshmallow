@@ -8,38 +8,45 @@ using UnityEngine;
 
 namespace Inventory
 {
-	public class PlayerInventory : MonoBehaviour
+	public class PlayerInventory : ParentInventory
 	{
-		public InventorySO playerInventory;
-		public InventorySO equipmentInventory;
-		public InventorySO lickerInventory;
+		#region variables
+		public InventorySO inventorySO;
+
+		#endregion
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
 			SetGroundItemToInventorySlot(collision);
 		}
 
-		private void OnApplicationQuit()
-		{
-			playerInventory.ClearSlots();
-			equipmentInventory.ClearSlots();
-			lickerInventory.ClearSlots();
-		}
-
 		private void SetGroundItemToInventorySlot(Collider2D collision) //TransferGroundItemToInventory
 		{
 			if (collision.TryGetComponent<GroundItem>(out var groundItem))
 			{
-				var itemObject = new ItemSO(groundItem.itemSO);
+				//var collidedItemSO = new ItemSO(groundItem.itemSO);
 				//voor nu is amount altijd hetzelfde want ieder in-game item komt overeen met 1 inventory-item.
 				//als dit niet meer het geval is moet dit systeem aangepast worden.
-				if (playerInventory.CanAddItem(itemObject))
+				var itemObject = new ItemObject(groundItem.itemSO);
+				if (inventorySO.AddItem(itemObject))
 				{
-					playerInventory.AddItem(itemObject);
 					Destroy(collision.gameObject);
 				}
 			}
 		}
+
+		private void OnApplicationQuit()
+		{
+			ClearSlots(this.inventorySO);
+		}
+
+
+		//private void OnApplicationQuit()
+		//{
+		//	playerInventory.ClearSlots();
+		//	//equipmentInventory.ClearSlots();
+		//	lickerInventory.ClearSlots();
+		//}
 	}
 }
 
@@ -58,3 +65,9 @@ namespace Inventory
 		//		equipmentInventory.Load();
 		//	}
 		//}
+
+
+
+
+
+//Checken of dit over moet worden gezet?

@@ -12,9 +12,9 @@ namespace Inventory
 	{
 		public ItemType[] AllowedItems = new ItemType[0];
 		[System.NonSerialized]
-		public UserInterface parent;
+		public UserInterfaceMB parent;
 		[System.NonSerialized]
-		public GameObject slotDisplay;
+		public GameObject slotGO;
 		[System.NonSerialized]
 		public SlotUpdated OnAfterUpdate;
 		[System.NonSerialized]

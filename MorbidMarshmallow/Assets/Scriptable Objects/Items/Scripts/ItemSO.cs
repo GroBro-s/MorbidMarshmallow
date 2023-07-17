@@ -3,9 +3,7 @@
 * https://github.com/GroBro-s
 */
 
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public enum ItemType
 {
@@ -30,6 +28,11 @@ public class ItemSO : ScriptableObject
 	public ItemType type;
 	[TextArea(15, 20)]
 	public string description;
+
+	public ItemSO(ItemSO itemSO)
+	{
+		
+	}
 }
 
 public interface IBaseItem
@@ -40,20 +43,21 @@ public interface IBaseItem
 	int Id { get; set; }
 	ItemType Type { get; set; }
 	string Description { get; set; }
+	ItemSO ItemSO { get; set; }
 }
 
 public class ItemObject
 {
 	public IBaseItem Item { get; private set; }
-	public ItemObject(ItemSO item)
+	public ItemObject(ItemSO itemSO)
 	{
-		switch (item.stackable)
+		switch (itemSO.stackable)
 		{
 			case false:
-				Item = new UnStackableItem(item);
+				Item = new UnStackableItem(itemSO);
 				break;
 			case true:
-				Item = new StackableItem(item);
+				Item = new StackableItem(itemSO);
 				break;
 		}
 	}
@@ -82,6 +86,7 @@ public abstract class BaseItem : IBaseItem
 	public int Id { get; set; }
 	public ItemType Type { get; set; }
 	public string Description { get; set; }
+	public ItemSO ItemSO { get; set; }
 
 	public BaseItem(ItemSO itemSO)
 	{
@@ -89,5 +94,6 @@ public abstract class BaseItem : IBaseItem
 		this.Id = itemSO.id;
 		this.Type = itemSO.type;
 		this.Description = itemSO.description;
+		this.ItemSO = itemSO;
 	}
 }
