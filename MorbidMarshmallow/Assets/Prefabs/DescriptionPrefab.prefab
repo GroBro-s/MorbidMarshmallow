@@ -75,8 +75,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backGround: {fileID: 1678807983447694279}
-  pivotPoint: {fileID: 131605176159409003}
-  description: {fileID: 5427098514040202471}
   finalPrefferedHeight: 0
   m_TextMeshPro: {fileID: 5677041131101936750}
 --- !u!114 &-2539442719250167575
@@ -91,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44321f67979bf504ea29486bf1ef70f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: {fileID: 5677041131101936750}
+  descriptionPrefab: {fileID: 51691548516236411}
 --- !u!1 &131605176159409003
 GameObject:
   m_ObjectHideFlags: 0

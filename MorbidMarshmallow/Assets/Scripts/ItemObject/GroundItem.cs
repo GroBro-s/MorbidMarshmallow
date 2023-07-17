@@ -30,51 +30,91 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 	public static GameObject Create(ItemSO itemSO)
 	{
 		var newGroundItem = CreateNewGroundItem(itemSO);
-		var spawnPos = SetSpawnPosition();
-		newGroundItem.transform.SetPositionAndRotation(spawnPos, Quaternion.identity);
+		// spawnPos = GetSpawnPosition();
 
-		CreateSpriteInChild(newGroundItem, itemSO);
+		newGroundItem.transform.SetPositionAndRotation(GetSpawnPosition(), Quaternion.identity);  //spawnPos <- heb ik uit de SetPositionAndRotation gehaald en in 1 keer gedaan, is dit handig?
+
+		//CreateSpriteInChild(newGroundItem.transform, itemSO);
 
 		return newGroundItem;
-	}
-
-	private static void CreateSpriteInChild(GameObject groundItem, ItemSO itemSO) //GameObject groundItem, ItemObject itemObject
-	{
-		var childObject = new GameObject() { name = "Sprite" };
-
-		childObject.AddComponent<SpriteRenderer>();
-		childObject.GetComponent<SpriteRenderer>().sprite = itemSO
-			.sprite;
-		childObject.GetComponent<SpriteRenderer>().sortingLayerName = "Items";
-
-		childObject.transform.parent = groundItem.transform;
-		childObject.transform.position = groundItem.transform.position;
-		childObject.transform.localScale = new Vector3(4, 4, 1);
 	}
 
 	private static GameObject CreateNewGroundItem(ItemSO itemSO)
 	{
-		var newGroundItem = new GameObject { name = "Item" };
-		newGroundItem.transform.parent = GameObject.Find("Collectables").transform;
-		newGroundItem.AddComponent<BoxCollider2D>();
-		newGroundItem.GetComponent<BoxCollider2D>().isTrigger = true;
+		var newGroundItem = new GameObject { name = "Item" }; //ItemSO kan in 1 keer worden toegevoegd met functie zie regel 12
 
-		var groundItemObject = newGroundItem.AddComponent<GroundItem>();
-		groundItemObject.itemSO = itemSO;
+		SetCollectablesAsParent(newGroundItem);
+
+		AddBoxCollider2DWithTrigger(newGroundItem);
+		AddGroundItemWithItemSO(newGroundItem, itemSO); //kan dit in 1 keer?
 		//groundItemObject.amount = slot.amount;
+
+		CreateSpriteInChild(newGroundItem.transform, itemSO);
 
 		return newGroundItem;
 	}
 
-	private static Vector2 SetSpawnPosition()
+	private static Transform SetCollectablesAsParent(GameObject newGroundItem)
 	{
-		var player = GameObject.FindGameObjectWithTag("Player");
-		var offsetRange = Random.Range(-3f, 3f);
+		return newGroundItem.transform.parent = GameObject.Find("Collectables").transform;
+	}
+	
+	private static GameObject AddBoxCollider2DWithTrigger(GameObject newGroundItem)
+	{
+		newGroundItem.AddComponent<BoxCollider2D>().isTrigger = true;
+		return newGroundItem;
+	}
 
-		while (offsetRange > -1 && offsetRange < 1)
+	private static GameObject AddGroundItemWithItemSO(GameObject newGroundItem, ItemSO itemSO)
+	{
+		newGroundItem.AddComponent<GroundItem>().itemSO = itemSO;
+		return newGroundItem;
+	}
+	
+	private static void CreateSpriteInChild(Transform groundItemTransform, ItemSO itemSO) //GameObject groundItem, ItemObject itemObject //GameObject groundItem of Transform groundItemTransform??
+	{
+		var childObject = new GameObject() { name = "Sprite" };
+
+		AddSpriteRenderer(childObject, itemSO);
+		AddTransformInfo(childObject.transform, groundItemTransform);
+	}
+
+	private static GameObject AddSpriteRenderer(GameObject childObject, ItemSO itemSO)
+	{
+		childObject.AddComponent<SpriteRenderer>();
+		childObject.GetComponent<SpriteRenderer>().sprite = itemSO.sprite;
+		childObject.GetComponent<SpriteRenderer>().sortingLayerName = "Items";
+
+		return childObject;
+	}
+
+	private static Transform AddTransformInfo(Transform childTransform, Transform ParentTransform)
+	{
+		childTransform.parent = ParentTransform;
+		childTransform.position = ParentTransform.position;
+		childTransform.localScale = new Vector3(4, 4, 1);
+
+		return childTransform;
+	}
+
+	private static Vector2 GetSpawnPosition()
+	{
+		var playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		var offset = GetOffset();
+
+		return new Vector2(playerTransform.transform.position.x + offset, playerTransform.transform.position.y);
+	}
+
+	private static float GetOffset()
+	{
+		var offset = Random.Range(-3f, 3f);
+
+//while offset is less than 1 unit from the origin		
+		while (offset > -1 && offset < 1) 
 		{
-			offsetRange = Random.Range(-3f, 3f);
+			offset = Random.Range(-3f, 3f);
 		}
-		return new Vector2(player.transform.position.x + offsetRange, player.transform.position.y);
+
+		return offset;
 	}
 }

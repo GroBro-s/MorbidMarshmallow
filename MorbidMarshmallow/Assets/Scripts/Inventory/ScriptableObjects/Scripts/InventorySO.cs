@@ -15,12 +15,33 @@ namespace Inventory
 	{
 		public string savePath;
 		public ItemDatabaseObject database;
-		public InventorySlot[] Slots = new InventorySlot[24];
+		public InventorySlot[] slots = new InventorySlot[24];
 
+
+		public bool AddItem(ItemObject itemObject, int amount = 1)
+		{
+			if (CanAddItem(itemObject))
+			{
+				InventorySlot slot = FindItemOnInventory(itemObject.Item.Id);
+
+				if (!database.ItemObjects[itemObject.Item.Id].stackable || slot == null)
+				{
+					FillNewSlot(itemObject, amount);
+				}
+				else
+				{
+					slot.AddAmount(amount);
+				}
+
+				return true;
+			}
+
+			return false;
+		}
 		
 		public bool CanAddItem(ItemObject itemObject)
 		{
-			InventorySlot slot = FindItemOnInventory(itemObject);
+			InventorySlot slot = FindItemOnInventory(itemObject.Item.Id);
 
 			if (!database.ItemObjects[itemObject.Item.Id].stackable || slot == null)
 			{
@@ -32,31 +53,9 @@ namespace Inventory
 			}
 		}
 
-		public void AddItem(ItemObject itemObject, int amount = 1)
-		{
-			InventorySlot slot = FindItemOnInventory(itemObject);
-
-			if (!database.ItemObjects[itemObject.Item.Id].stackable  || slot == null)
-			{
-				FillNewSlot(itemObject, amount);	
-			}
-			else
-			{
-				slot.AddAmount(amount);
-			}
-		}
-
 		public bool CanAddUnstackableItem()
 		{
-			if (CountEmptySlots() == 0)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-
+			return CountEmptySlots() > 0;
 		}
 
 		public bool CanAddStackableItem()
@@ -71,9 +70,9 @@ namespace Inventory
 		public int CountEmptySlots()
 		{
 			int counter = 0;
-			for (int i = 0; i < Slots.Length; i++)
+			for (int i = 0; i < slots.Length; i++)
 			{
-				if (Slots[i].ItemObject.Item.Id <= -1)
+				if (slots[i].ItemObject.Item.Id <= -1)
 				{
 					counter++;
 				}
@@ -81,13 +80,13 @@ namespace Inventory
 			return counter;
 		}
 
-		public InventorySlot FindItemOnInventory(ItemObject itemObject)
+		public InventorySlot FindItemOnInventory(int objectId)
 		{
-			for (int i = 0; i < Slots.Length; i++)
+			for (int i = 0; i < slots.Length; i++)
 			{
-				if (Slots[i].ItemObject.Item.Id == itemObject.Item.Id)
+				if (slots[i].ItemObject.Item.Id == objectId)
 				{
-					return Slots[i];
+					return slots[i];
 				}
 			}
 			return null;
@@ -95,11 +94,11 @@ namespace Inventory
 
 		public InventorySlot FillNewSlot(ItemObject itemObject, int amount)
 		{
-			for (int i = 0; i < Slots.Length; i++)
+			for (int i = 0; i < slots.Length; i++)
 			{
-				if (Slots[i].ItemObject.Item.Id <= -1)
+				if (slots[i].ItemObject.Item.Id <= -1)
 				{
-					Slots[i].UpdateSlot(itemObject, amount);
+					slots[i].UpdateSlot(itemObject, amount);
 				}
 			}
 			//negeer item als de inventory vol is.
@@ -144,21 +143,21 @@ namespace Inventory
 			slot1.UpdateSlot(temp.ItemObject, temp.amount);
 		}
 
-		public void ClearSlots()
-		{
-			for (int i = 0; i < Slots.Length; i++)
-			{
-				Slots[i].ClearSlot();
-			}
-		}
+		//public void ClearSlots()
+		//{
+		//	for (int i = 0; i < Slots.Length; i++)
+		//	{
+		//		Slots[i].ClearSlot();
+		//	}
+		//}
 
 		public void RemoveItem(ItemObject itemObject)
 		{
-			for (int i = 0; i < Slots.Length; i++)
+			for (int i = 0; i < slots.Length; i++)
 			{
-				if (Slots[i].ItemObject == itemObject)
+				if (slots[i].ItemObject == itemObject)
 				{
-					Slots[i].ClearSlot();
+					slots[i].ClearSlot();
 				}
 			}
 		}
@@ -206,8 +205,8 @@ namespace Inventory
 
 		public static void UpdateSlotDisplay(this InventorySlot slot)
 		{
-			var slotImage = slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>();
-			var slotText = slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>();
+			var slotImage = slot.slotGO.transform.GetChild(0).GetComponentInChildren<Image>();
+			var slotText = slot.slotGO.GetComponentInChildren<TextMeshProUGUI>();
 
 			if (slot.ItemObject.Item.Id >= 0)
 			{
