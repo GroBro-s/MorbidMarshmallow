@@ -3,20 +3,12 @@
 * https://github.com/GroBro-s
 */
 
-using UnityEngine;
-using TMPro;
 using Inventory;
-using Unity.VisualScripting;
-using UnityEngine.UIElements;
+using UnityEngine;
 
 public class DescriptionMB : MonoBehaviour
 {
 	#region variables
-
-	[Header("Attributes")]
-
-
-	[Header("Unity Setup Fields")]
 	public static GameObject descriptionPrefab;
 	private static int _offset = 100;
 
@@ -28,14 +20,6 @@ public class DescriptionMB : MonoBehaviour
 	private void Start()
 	{
 		CheckInstance();
-	}
-
-	private void Update()
-	{
-		if (descriptionGO != null)
-		{
-			SetDescriptionPosition();
-		}
 	}
 
 	private void CheckInstance()
@@ -56,10 +40,12 @@ public class DescriptionMB : MonoBehaviour
 	{
 		_instance = null;
 	}
-	public static GameObject Create(ItemObject itemObject) //UserInterfaceMB userInterface, 
+
+	public static GameObject Create(GameObject slotGO) //UserInterfaceMB userInterface, 
 	{
 		//var parent = userInterface.parent;
-		descriptionGO = Instantiate(descriptionPrefab, Vector2.zero, Quaternion.identity); //userInterface.descriptionPrefab, parent
+		var slotPosition = SetDescriptionPosition(slotGO);
+		descriptionGO = Instantiate(descriptionPrefab, slotPosition, Quaternion.identity); //userInterface.descriptionPrefab, parent
 		return descriptionGO;
 		//var _uiDisplay = hoveringItem.ItemObject.uiDisplay;
 	}
@@ -69,21 +55,42 @@ public class DescriptionMB : MonoBehaviour
 		descriptionGO = null;
 	}
 
-	private static void SetDescriptionPosition()
+	private static Vector2 SetDescriptionPosition(GameObject slotGO)
 	{
-		var mousePos = MouseObject.GetPosition();
 		float outerScreenBorder = Screen.width - 200;
 
-		descriptionGO.transform.position = new Vector2
-		{
-			x = mousePos.x > outerScreenBorder 
-				? mousePos.x -= _offset 
-				: mousePos.x += _offset,
-			y = mousePos.y -= _offset
-		};
+		var slotPosition = slotGO.transform.position;
+
+		slotPosition.x = slotPosition.x > outerScreenBorder
+			? slotPosition.x -= _offset
+			: slotPosition.x += _offset;
+		slotPosition.y = slotPosition.y -= _offset;
+
+		return slotPosition;
 	}
 	#endregion
 }
+
+//private static void SetDescriptionPosition(GameObject slotGO)
+//{
+//	var mousePos = MouseObject.GetPosition();
+//	float outerScreenBorder = Screen.width - 200;
+
+//	descriptionGO.transform.position = new Vector2
+//	{
+//		x = mousePos.x > outerScreenBorder 
+//			? mousePos.x -= _offset 
+//			: mousePos.x += _offset,
+//		y = mousePos.y -= _offset
+//	};
+//}
+//private void Update()
+//{
+//	if (descriptionGO != null)
+//	{
+//		SetDescriptionPosition(slot);
+//	}
+//}
 
 //public class DescriptionObject
 //{

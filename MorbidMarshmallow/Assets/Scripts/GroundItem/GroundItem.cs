@@ -1,4 +1,8 @@
-using Unity.VisualScripting;
+/*
+* Grobros
+* https://github.com/GroBro-s
+*/
+
 using UnityEditor;
 using UnityEngine;
 
@@ -10,22 +14,10 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 	public bool looted = false;
 
 	public GroundItem(ItemSO itemSO)
-	{ 
+	{
 		this.itemSO = itemSO;
 	}
 
-	public void OnAfterDeserialize()
-	{
-		
-	}
-
-	public void OnBeforeSerialize()
-	{
-#if UNITY_EDITOR
-		GetComponentInChildren<SpriteRenderer>().sprite = itemSO.sprite;
-		EditorUtility.SetDirty(GetComponentInChildren<SpriteRenderer>());
-#endif
-	}
 
 	public static GameObject Create(ItemSO itemSO)
 	{
@@ -47,7 +39,7 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 
 		AddBoxCollider2DWithTrigger(newGroundItem);
 		AddGroundItemWithItemSO(newGroundItem, itemSO); //kan dit in 1 keer?
-		//groundItemObject.amount = slot.amount;
+														//groundItemObject.amount = slot.amount;
 
 		CreateSpriteInChild(newGroundItem.transform, itemSO);
 
@@ -58,7 +50,7 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 	{
 		return newGroundItem.transform.parent = GameObject.Find("Collectables").transform;
 	}
-	
+
 	private static GameObject AddBoxCollider2DWithTrigger(GameObject newGroundItem)
 	{
 		newGroundItem.AddComponent<BoxCollider2D>().isTrigger = true;
@@ -70,7 +62,7 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 		newGroundItem.AddComponent<GroundItem>().itemSO = itemSO;
 		return newGroundItem;
 	}
-	
+
 	private static void CreateSpriteInChild(Transform groundItemTransform, ItemSO itemSO) //GameObject groundItem, ItemObject itemObject //GameObject groundItem of Transform groundItemTransform??
 	{
 		var childObject = new GameObject() { name = "Sprite" };
@@ -109,12 +101,25 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 	{
 		var offset = Random.Range(-3f, 3f);
 
-//while offset is less than 1 unit from the origin		
-		while (offset > -1 && offset < 1) 
+		//while offset is less than 1 unit from the origin		
+		while (offset > -1 && offset < 1)
 		{
 			offset = Random.Range(-3f, 3f);
 		}
 
 		return offset;
+	}
+
+	public void OnAfterDeserialize()
+	{
+
+	}
+
+	public void OnBeforeSerialize()
+	{
+#if UNITY_EDITOR
+		GetComponentInChildren<SpriteRenderer>().sprite = itemSO.sprite;
+		EditorUtility.SetDirty(GetComponentInChildren<SpriteRenderer>());
+#endif
 	}
 }

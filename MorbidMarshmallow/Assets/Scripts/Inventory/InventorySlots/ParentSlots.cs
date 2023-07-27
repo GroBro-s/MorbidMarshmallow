@@ -4,7 +4,6 @@
 */
 using Inventory;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class ParentSlots : UserInterfaceMB
@@ -14,8 +13,6 @@ public abstract class ParentSlots : UserInterfaceMB
 
 	public Dictionary<GameObject, InventorySlot> slots = new();
 	public InventorySO inventorySO;
-
-	private DescriptionMB _descriptionMB;
 	#endregion
 
 	#region Unity Methods
@@ -54,11 +51,12 @@ public abstract class ParentSlots : UserInterfaceMB
 		MouseObject.slotHoveredOver = slotGO;
 		if (!_dragging)
 		{
-			var itemObject = slots[slotGO].ItemObject;
+			var slot = slots[slotGO];
+			var itemObject = slot?.ItemObject;
 
-			if (itemObject.Item.Id >= 0)
+			if ((itemObject?.Item.Id ?? -1) >= 0)
 			{
-				_descriptionMB = new DescriptionMB();
+				DescriptionMB.Create(slotGO);
 			}
 		}
 	}

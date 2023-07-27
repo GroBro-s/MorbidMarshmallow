@@ -3,7 +3,6 @@
 * https://github.com/GroBro-s
 */
 
-using Inventory;
 using System.Collections.Generic;
 using UnityEngine;
 

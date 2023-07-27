@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
-  m_Name: Heavy Weight
+  m_Name: Weight
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 1536526861, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
-  stackable: 0
-  type: 3
-  description: A heavy weight can be dropped from a height to kill.
-  item:
-    Name: 
-    Id: 1
-    Type: 0
+  sprite: {fileID: -793860216, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
+  stackable: 1
+  itemName: 
+  id: 6
+  type: 2
+  description: Add enough of these weights together to make a really heavy, dangerous,
+    big weight.
