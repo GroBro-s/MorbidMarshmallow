@@ -1,5 +1,8 @@
+/*
+* Grobros
+* https://github.com/GroBro-s
+*/
 using Inventory;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,7 +18,6 @@ public class DynamicSlots : ParentSlots
 
 	public override void CreateSlots()
 	{
-		slots = new Dictionary<GameObject, InventorySlot>();
 		for (int i = 0; i < inventorySO.slots.Length; i++)
 		{
 			var slot = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);

@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
-  m_Name: SugarCane
+  m_Name: FoodObject
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 60347655, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
+  sprite: {fileID: -141366367, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
-  type: 0
-  description: Sugarcanes are the essential part of de sharp sugarcane because of
-    the perfect belance between toughness and sharpness.
-  item:
-    Name: 
-    Id: 5
-    Type: 0
+  itemName: 
+  id: 0
+  type: 6
+  description: A foodItem can be used to heal yourself. Even though we really recommend
+    not eating because you ofcourse want to die.

@@ -1,4 +1,7 @@
-using Inventory;
+/*
+* Grobros
+* https://github.com/GroBro-s
+*/
 using UnityEngine.EventSystems;
 
 public class StaticSlots : ParentSlots

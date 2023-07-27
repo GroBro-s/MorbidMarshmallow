@@ -3,11 +3,12 @@
 * https://github.com/GroBro-s
 */
 
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Inventory
 {
+	//De parentinventory moet worden opgedeelt in 2 groepen van inventories die grounditems op kunnen pakken en
+	//inventories die dat niet kunnen.
 	public class PlayerInventory : ParentInventory
 	{
 		#region variables

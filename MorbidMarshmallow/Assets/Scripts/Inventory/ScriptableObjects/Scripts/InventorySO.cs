@@ -20,71 +20,28 @@ namespace Inventory
 
 		public bool AddItem(ItemObject itemObject, int amount = 1)
 		{
-			if (CanAddItem(itemObject))
+			var itemId_object = itemObject.Item.Id;
+			InventorySlot slot = FindItemOnInventory(itemId_object);
+			var stackableItem = database.ItemObjects[itemId_object].stackable;
+
+			if (!stackableItem || (stackableItem && slot == null))
 			{
-				InventorySlot slot = FindItemOnInventory(itemObject.Item.Id);
-
-				if (!database.ItemObjects[itemObject.Item.Id].stackable || slot == null)
-				{
-					FillNewSlot(itemObject, amount);
-				}
-				else
-				{
-					slot.AddAmount(amount);
-				}
-
+				FillNewSlot(itemObject, amount);
 				return true;
 			}
-
-			return false;
-		}
-		
-		public bool CanAddItem(ItemObject itemObject)
-		{
-			InventorySlot slot = FindItemOnInventory(itemObject.Item.Id);
-
-			if (!database.ItemObjects[itemObject.Item.Id].stackable || slot == null)
+			else  //als er ooit een maximum op het aantal stackable objecten komt moet hier de voorwaarde aangepast worden.
 			{
-				return CanAddUnstackableItem();
-			}
-			else
-			{
-				return CanAddStackableItem();
-			}
-		}
-
-		public bool CanAddUnstackableItem()
-		{
-			return CountEmptySlots() > 0;
-		}
-
-		public bool CanAddStackableItem()
-		{
-			if(true)
-			{
+				slot.AddAmount(amount);
 				return true;
-			}
-			//als er ooit een maximum op het aantal stackable objecten komt moet hier een else toegevoegd worden.
+			};
 		}
 
-		public int CountEmptySlots()
-		{
-			int counter = 0;
-			for (int i = 0; i < slots.Length; i++)
-			{
-				if (slots[i].ItemObject.Item.Id <= -1)
-				{
-					counter++;
-				}
-			}
-			return counter;
-		}
-
-		public InventorySlot FindItemOnInventory(int objectId)
+		public InventorySlot FindItemOnInventory(int itemId_object)
 		{
 			for (int i = 0; i < slots.Length; i++)
 			{
-				if (slots[i].ItemObject.Item.Id == objectId)
+				var itemId_slot = slots[i].ItemObject?.Item.Id;
+				if (itemId_slot == itemId_object) // slot moet null zijn maar de editor laat 0 zien. alsnog wordt hij hier als ongelijk weergegeven, wat klopt. Wij hebben geen verklaring kan later errors opleveren.
 				{
 					return slots[i];
 				}
@@ -96,9 +53,10 @@ namespace Inventory
 		{
 			for (int i = 0; i < slots.Length; i++)
 			{
-				if (slots[i].ItemObject.Item.Id <= -1)
+				if (slots[i].ItemObject == null)
 				{
 					slots[i].UpdateSlot(itemObject, amount);
+					return slots[i];
 				}
 			}
 			//negeer item als de inventory vol is.
@@ -143,14 +101,6 @@ namespace Inventory
 			slot1.UpdateSlot(temp.ItemObject, temp.amount);
 		}
 
-		//public void ClearSlots()
-		//{
-		//	for (int i = 0; i < Slots.Length; i++)
-		//	{
-		//		Slots[i].ClearSlot();
-		//	}
-		//}
-
 		public void RemoveItem(ItemObject itemObject)
 		{
 			for (int i = 0; i < slots.Length; i++)
@@ -161,6 +111,15 @@ namespace Inventory
 				}
 			}
 		}
+
+
+		//public void ClearSlots()
+		//{
+		//	for (int i = 0; i < Slots.Length; i++)
+		//	{
+		//		Slots[i].ClearSlot();
+		//	}
+		//}
 
 		#region Save and load method 
 		//[ContextMenu("Save")]
@@ -188,6 +147,20 @@ namespace Inventory
 		//	}
 		//}
 		#endregion
+
+		//public int CountEmptySlots()
+		//{
+		//	//Moet een do-while zijn. Bespaard computer kracht door maar 1 cel te hoeven vinden in plaats van 24.
+		//	int counter = 0;
+		//	for (int i = 0; i < slots.Length; i++)
+		//	{
+		//		if (slots[i].ItemObject == null)
+		//		{
+		//			counter++;
+		//		}
+		//	}
+		//	return counter;
+		//}
 	}
 
 	public delegate void SlotUpdated(InventorySlot _slot);

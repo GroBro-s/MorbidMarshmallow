@@ -2,22 +2,13 @@
 * Grobros
 * https://github.com/GroBro-s/MorbidMarshmallow
 */
-using Inventory;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEngine;
 
+using UnityEngine;
 
 namespace Inventory
 {
 	public class ParentInventory : MonoBehaviour
 	{
-		#region Variables
-
-		//public InventorySO equipmentInventory;
-
-
-		#endregion
-
 		#region Unity Methods
 
 		public void ClearSlots(InventorySO inventory)
