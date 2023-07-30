@@ -6,7 +6,7 @@ using Inventory;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ParentSlots : UserInterfaceMB
+public abstract class ParentSlotsMB : UserInterfaceMB
 {
 	#region Variables
 	private bool _dragging = false;
@@ -16,7 +16,6 @@ public abstract class ParentSlots : UserInterfaceMB
 	#endregion
 
 	#region Unity Methods
-
 	private void Start()
 	{
 		CreateSlots();
@@ -56,7 +55,7 @@ public abstract class ParentSlots : UserInterfaceMB
 
 			if ((itemObject?.Item.Id ?? -1) >= 0)
 			{
-				DescriptionMB.Create(slotGO);
+				DescriptionMB.Create(slotGO, itemObject);
 			}
 		}
 	}
@@ -70,7 +69,7 @@ public abstract class ParentSlots : UserInterfaceMB
 
 	protected void OnDragStart(GameObject slot)
 	{
-		MouseObject.tempItemBeingDragged = TempItem.Create(this, slots[slot].ItemObject.Item);
+		MouseObject.tempItemBeingDragged = TempItemMB.Create(this, slots[slot].ItemObject.Item);
 	}
 
 	protected void OnDragEnd(GameObject slotGO)
@@ -85,7 +84,7 @@ public abstract class ParentSlots : UserInterfaceMB
 		{
 			for (int i = 0; i < slot.amount; i++)
 			{
-				GroundItem.Create(itemObject.Item.ItemSO);
+				GroundItemMB.Create(itemObject.Item.ItemSO);
 			}
 
 			slot.ClearSlot();
@@ -106,7 +105,7 @@ public abstract class ParentSlots : UserInterfaceMB
 
 		if (tempItemBeingDragged != null)
 		{
-			TempItem.Move(tempItemBeingDragged, mousePosition);
+			TempItemMB.Move(tempItemBeingDragged, mousePosition);
 			//tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
 		}
 	}

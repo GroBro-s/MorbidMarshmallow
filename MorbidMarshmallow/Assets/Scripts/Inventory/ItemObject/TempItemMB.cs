@@ -5,7 +5,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TempItem : MonoBehaviour
+public class TempItemMB : MonoBehaviour
 {
 	#region Unity Methods
 	public static GameObject Create(UserInterfaceMB userInterface, IBaseItem itemBeingDragged) //GameObject obj, 

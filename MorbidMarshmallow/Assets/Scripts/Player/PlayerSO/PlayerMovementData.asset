@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b547c9818ba3d3468cfde67382a323a, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: b8cb6cb576845144dbf924e979c53243, type: 3}
+  m_Name: PlayerMovementData
   m_EditorClassIdentifier: 
   gravityStrength: -77.77777
-  gravityScale: 3.8888886
+  gravityScale: 7.9284167
   fallGravityMult: 1.5
   maxFallSpeed: 25
   fastFallGravityMult: 2

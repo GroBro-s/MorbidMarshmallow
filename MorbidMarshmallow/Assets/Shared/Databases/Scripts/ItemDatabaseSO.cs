@@ -6,27 +6,27 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item Database", menuName = "Inventory System/Items/Database")]
-public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiver
+public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 {
-	public ItemSO[] ItemObjects;
+	public ItemSO[] ItemSOlist;
 
 	//checkt of de Id's nogsteeds overeenkomen
 	[ContextMenu("Update ID's")]
 	public void UpdateID()
 	{
-		for (int i = 0; i < ItemObjects.Length; i++)
+		for (int i = 0; i < ItemSOlist.Length; i++)
 		{
-			if (ItemObjects[i].id != i)
-				ItemObjects[i].id = i;
+			if (ItemSOlist[i].id != i)
+				ItemSOlist[i].id = i;
 		}
 	}
 
 	public ItemSO GetItemObject(int id)
 	{
-		foreach (var itemObject in ItemObjects)
+		foreach (var itemSO in ItemSOlist)
 		{
-			if(itemObject.id == id)
-				return itemObject;
+			if(itemSO.id == id)
+				return itemSO;
 		}
 		return null;
 	}

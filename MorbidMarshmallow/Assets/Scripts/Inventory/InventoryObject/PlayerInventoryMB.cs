@@ -9,7 +9,7 @@ namespace Inventory
 {
 	//De parentinventory moet worden opgedeelt in 2 groepen van inventories die grounditems op kunnen pakken en
 	//inventories die dat niet kunnen.
-	public class PlayerInventory : ParentInventory
+	public class PlayerInventoryMB : ParentInventoryMB
 	{
 		#region variables
 		public InventorySO inventorySO;
@@ -23,7 +23,7 @@ namespace Inventory
 
 		private void SetGroundItemToInventorySlot(Collider2D collision) //TransferGroundItemToInventory
 		{
-			if (collision.TryGetComponent<GroundItem>(out var groundItem))
+			if (collision.TryGetComponent<GroundItemMB>(out var groundItem))
 			{
 				//var collidedItemSO = new ItemSO(groundItem.itemSO);
 				//voor nu is amount altijd hetzelfde want ieder in-game item komt overeen met 1 inventory-item.
@@ -40,35 +40,5 @@ namespace Inventory
 		{
 			ClearSlots(this.inventorySO);
 		}
-
-
-		//private void OnApplicationQuit()
-		//{
-		//	playerInventory.ClearSlots();
-		//	//equipmentInventory.ClearSlots();
-		//	lickerInventory.ClearSlots();
-		//}
 	}
 }
-
-//Opslaan en laden van de inventory
-		//private void Update()
-		//{
-		//	if (Input.GetKeyDown(KeyCode.LeftShift))
-		//	{
-		//		playerInventory.Save();
-		//		equipmentInventory.Save();
-		//	}
-
-		//	if (Input.GetKeyDown(KeyCode.RightShift))
-		//	{
-		//		playerInventory.Load();
-		//		equipmentInventory.Load();
-		//	}
-		//}
-
-
-
-
-
-//Checken of dit over moet worden gezet?

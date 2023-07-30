@@ -6,9 +6,9 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementMB : MonoBehaviour
 {
-	public PlayerData Data;
+	public PlayerDataSO Data;
 
 	#region COMPONENTS
 	public Rigidbody2D rb { get; private set; }

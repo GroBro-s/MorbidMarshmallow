@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DynamicSlots : ParentSlots
+public class DynamicSlotsMB : ParentSlotsMB
 {
-	public GameObject inventoryPrefab;
+	public GameObject slotPrefab;
 	public int X_START;
 	public int Y_START;
 	public int X_SPACE_BETWEEN_ITEM;
@@ -20,7 +20,7 @@ public class DynamicSlots : ParentSlots
 	{
 		for (int i = 0; i < inventorySO.slots.Length; i++)
 		{
-			var slot = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
+			var slot = Instantiate(slotPrefab, Vector3.zero, Quaternion.identity, transform);
 			slot.GetComponent<RectTransform>().localPosition = GetPosition(i);
 
 			AddEvents(slot);

@@ -6,14 +6,14 @@
 using UnityEditor;
 using UnityEngine;
 
-public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
+public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 {
 	[SerializeField]
 	public ItemSO itemSO;
 	//public int amount = 1;
 	public bool looted = false;
 
-	public GroundItem(ItemSO itemSO)
+	public GroundItemMB(ItemSO itemSO)
 	{
 		this.itemSO = itemSO;
 	}
@@ -59,7 +59,7 @@ public class GroundItem : MonoBehaviour, ISerializationCallbackReceiver
 
 	private static GameObject AddGroundItemWithItemSO(GameObject newGroundItem, ItemSO itemSO)
 	{
-		newGroundItem.AddComponent<GroundItem>().itemSO = itemSO;
+		newGroundItem.AddComponent<GroundItemMB>().itemSO = itemSO;
 		return newGroundItem;
 	}
 

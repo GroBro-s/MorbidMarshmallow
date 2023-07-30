@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Inventory
 {
-	public class LickerInventory : ParentInventory
+	public class LickerMB : ParentInventoryMB
 	{
 		public Dictionary<ItemType, ItemType> lickableItems = new Dictionary<ItemType, ItemType>()
 		{
@@ -51,7 +51,7 @@ namespace Inventory
 
 		private void MakeGroundItem(InventorySlot slot)
 		{
-			GroundItem.Create(slot.ItemObject.Item.ItemSO);
+			GroundItemMB.Create(slot.ItemObject.Item.ItemSO);
 			slot.ClearSlot();
 		}
 
