@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
   savePath: 
-  database: {fileID: 11400000, guid: 3fe7382cca9e1384ea4d778fad974d4a, type: 2}
-  Slots:
-  - AllowedItems: 00000000
+  database: {fileID: 11400000, guid: db9e470c6a4a1d04da18539225b705fa, type: 2}
+  slots:
+  - AllowedItems: 
     amount: 0
   - AllowedItems: 
     amount: 0

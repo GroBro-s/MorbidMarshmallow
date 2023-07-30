@@ -4,7 +4,7 @@
 */
 using UnityEngine.EventSystems;
 
-public class StaticSlots : ParentSlots
+public class StaticSlotsMB : ParentSlotsMB
 {
 	public override void CreateSlots()
 	{

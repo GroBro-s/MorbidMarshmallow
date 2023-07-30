@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Inventory
 {
-	public class ParentInventory : MonoBehaviour
+	public class ParentInventoryMB : MonoBehaviour
 	{
 		#region Unity Methods
 
@@ -38,4 +38,11 @@ namespace Inventory
 //		equipmentInventory.Load();
 //		lickerInventory.Load();
 //	}
+//}
+
+//private void OnApplicationQuit()
+//{
+//	playerInventory.ClearSlots();
+//	//equipmentInventory.ClearSlots();
+//	lickerInventory.ClearSlots();
 //}

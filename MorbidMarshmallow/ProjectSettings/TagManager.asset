@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Inventory
+  - GameMaster
+  - SlotPrefab
+  - DescriptionPrefab
   layers:
   - Default
   - TransparentFX

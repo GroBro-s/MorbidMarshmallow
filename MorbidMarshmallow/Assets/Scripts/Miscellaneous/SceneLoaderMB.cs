@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoaderMB : MonoBehaviour
 {
 	public GameObject loadingScreen;
 	public Slider slider;

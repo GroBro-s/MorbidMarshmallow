@@ -4,21 +4,34 @@
 */
 
 using Inventory;
+using TMPro;
 using UnityEngine;
 
 public class DescriptionMB : MonoBehaviour
 {
 	#region variables
+	public GameObject gameController;
 	public static GameObject descriptionPrefab;
-	private static int _offset = 100;
+	public static Transform canvas;
+
+	private static int _xOffset = 110;
+	private static int _yOffset = 0;
 
 	private DescriptionMB _instance;
     public static GameObject descriptionGO;
+
+	public TextMeshProUGUI text;
 	#endregion
 
 	#region unity functions
 	private void Start()
 	{
+		gameController = GameObject.FindGameObjectWithTag("GameController");
+
+		var gameStats = gameController.GetComponent<GameStatsMB>();
+		descriptionPrefab = gameStats.descriptionPrefab;
+		canvas = gameStats.canvas;
+
 		CheckInstance();
 	}
 
@@ -41,62 +54,56 @@ public class DescriptionMB : MonoBehaviour
 		_instance = null;
 	}
 
-	public static GameObject Create(GameObject slotGO) //UserInterfaceMB userInterface, 
+	public static GameObject Create(GameObject slotGO, ItemObject itemObject) //UserInterfaceMB userInterface, 
 	{
 		//var parent = userInterface.parent;
-		var slotPosition = SetDescriptionPosition(slotGO);
-		descriptionGO = Instantiate(descriptionPrefab, slotPosition, Quaternion.identity); //userInterface.descriptionPrefab, parent
+		//var itemDescription = slotGO.
+		var slotPosition = GetDescriptionPosition(slotGO);
+		descriptionGO = Instantiate(descriptionPrefab, Vector2.zero, Quaternion.identity, canvas); //userInterface.descriptionPrefab, parent
+
+		var backGround = descriptionGO.transform.Find("BackGround");
+		backGround.GetComponent<RectTransform>().position = slotPosition;
+
+		descriptionGO.GetComponentInChildren<TextMeshProUGUI>().text = itemObject.Item.ItemSO.description;
+		//descriptionGO.GetComponent<DescriptionMB>().AssignValues(itemDescription);
 		return descriptionGO;
 		//var _uiDisplay = hoveringItem.ItemObject.uiDisplay;
 	}
 
 	public static void DestroyDescription()
 	{
-		descriptionGO = null;
+		Destroy(descriptionGO);
+		//descriptionGO = null;
 	}
 
-	private static Vector2 SetDescriptionPosition(GameObject slotGO)
+	private static Vector2 GetDescriptionPosition(GameObject slotGO)
 	{
 		float outerScreenBorder = Screen.width - 200;
 
 		var slotPosition = slotGO.transform.position;
 
 		slotPosition.x = slotPosition.x > outerScreenBorder
-			? slotPosition.x -= _offset
-			: slotPosition.x += _offset;
-		slotPosition.y = slotPosition.y -= _offset;
+			? slotPosition.x -= _xOffset
+			: slotPosition.x += _xOffset;
+		slotPosition.y = slotPosition.y -= _yOffset;
 
 		return slotPosition;
+	}
+	
+	public void AssignValues(string _description)
+	{
+		text.text = _description;
+
+		//string _name, , Sprite _itemSprite
+		//name.text = _name;
+		//item.sprite = _itemSprite;
 	}
 	#endregion
 }
 
-//private static void SetDescriptionPosition(GameObject slotGO)
-//{
-//	var mousePos = MouseObject.GetPosition();
-//	float outerScreenBorder = Screen.width - 200;
-
-//	descriptionGO.transform.position = new Vector2
-//	{
-//		x = mousePos.x > outerScreenBorder 
-//			? mousePos.x -= _offset 
-//			: mousePos.x += _offset,
-//		y = mousePos.y -= _offset
-//	};
-//}
-//private void Update()
-//{
-//	if (descriptionGO != null)
-//	{
-//		SetDescriptionPosition(slot);
-//	}
-//}
-
 //public class DescriptionObject
 //{
 //	#region variables
-//	public TextMeshProUGUI text;
-//	public DescriptionMB descriptionMB;
 //	public GameObject descriptionGO;
 //	#endregion
 
@@ -112,15 +119,28 @@ public class DescriptionMB : MonoBehaviour
 //	}
 //	#endregion
 //}
-
-//public void AssignValues( string _description) 
+//private static void SetDescriptionPosition(GameObject slotGO)
 //{
-//	text.text = _description;
+//	var mousePos = MouseObject.GetPosition();
+//	float outerScreenBorder = Screen.width - 200;
 
-//	//string _name, , Sprite _itemSprite
-//	//name.text = _name;
-//	//item.sprite = _itemSprite;
+//	descriptionGO.transform.position = new Vector2
+//	{
+//		x = mousePos.x > outerScreenBorder 
+//			? mousePos.x -= _offset 
+//			: mousePos.x += _offset,
+//		y = mousePos.y -= _offset
+//	};
 //}
+
+//private void Update()
+//{
+//	if (descriptionGO != null)
+//	{
+//		SetDescriptionPosition(slot);
+//	}
+//}
+
 
 //private void SetPosition()
 //{
@@ -139,6 +159,7 @@ public class DescriptionMB : MonoBehaviour
 
 //	return pos;
 //}
+
 //private float SetDescriptionXPosition(float xPosition, int offset)
 //{
 //	float outerScreenBorder = Screen.width - 200;

@@ -14,7 +14,7 @@ namespace Inventory
 	public class InventorySO : ScriptableObject
 	{
 		public string savePath;
-		public ItemDatabaseObject database;
+		public ItemDatabaseSO database;
 		public InventorySlot[] slots = new InventorySlot[24];
 
 
@@ -22,7 +22,7 @@ namespace Inventory
 		{
 			var itemId_object = itemObject.Item.Id;
 			InventorySlot slot = FindItemOnInventory(itemId_object);
-			var stackableItem = database.ItemObjects[itemId_object].stackable;
+			var stackableItem = database.ItemSOlist[itemId_object].stackable;
 
 			if (!stackableItem || (stackableItem && slot == null))
 			{
@@ -111,88 +111,86 @@ namespace Inventory
 				}
 			}
 		}
-
-
-		//public void ClearSlots()
-		//{
-		//	for (int i = 0; i < Slots.Length; i++)
-		//	{
-		//		Slots[i].ClearSlot();
-		//	}
-		//}
-
-		#region Save and load method 
-		//[ContextMenu("Save")]
-		//public void Save()
-		//{
-		//	IFormatter formatter = new BinaryFormatter();
-		//	Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
-		//	formatter.Serialize(stream, Container);
-		//	stream.Close();
-		//}
-
-		//[ContextMenu("load")]
-		//public void Load()
-		//{
-		//	if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
-		//	{
-		//		IFormatter formatter = new BinaryFormatter();
-		//		Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-		//		InventoryContainer newContainer = (InventoryContainer)formatter.Deserialize(stream);
-		//		for (int i = 0; i < Slots.Length; i++)
-		//		{
-		//			Slots[i].UpdateSlot(newContainer.Slots[i].ItemObject, newContainer.Slots[i].amount);
-		//		}
-		//		stream.Close();
-		//	}
-		//}
-		#endregion
-
-		//public int CountEmptySlots()
-		//{
-		//	//Moet een do-while zijn. Bespaard computer kracht door maar 1 cel te hoeven vinden in plaats van 24.
-		//	int counter = 0;
-		//	for (int i = 0; i < slots.Length; i++)
-		//	{
-		//		if (slots[i].ItemObject == null)
-		//		{
-		//			counter++;
-		//		}
-		//	}
-		//	return counter;
-		//}
 	}
+		public delegate void SlotUpdated(InventorySlot _slot);
 
-	public delegate void SlotUpdated(InventorySlot _slot);
-
-	public static class ExtensionMethods
-	{
-		public static void UpdateSlotsDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
+		public static class ExtensionMethods
 		{
-			foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
+			public static void UpdateSlotsDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
 			{
-				var slot = _slot.Value;
-				slot.UpdateSlotDisplay();
+				foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
+				{
+					var slot = _slot.Value;
+					slot.UpdateSlotDisplay();
+				}
+			}
+
+			public static void UpdateSlotDisplay(this InventorySlot slot)
+			{
+				var slotImage = slot.slotGO.transform.GetChild(0).GetComponentInChildren<Image>();
+				var slotText = slot.slotGO.GetComponentInChildren<TextMeshProUGUI>();
+
+				if ((slot.ItemObject?.Item.Id ?? -1) >= 0)
+				{
+					slotImage.sprite = slot.ItemObject.Item.Sprite;
+					slotImage.color = new Color(1, 1, 1, 1);
+					slotText.text = slot.amount == 1 ? "" : slot.amount.ToString("n0");
+				}
+				else
+				{
+					slotImage.sprite = null;
+					slotImage.color = new Color(0, 0, 0, 0);
+					slotText.text = "";
+				}
 			}
 		}
-
-		public static void UpdateSlotDisplay(this InventorySlot slot)
-		{
-			var slotImage = slot.slotGO.transform.GetChild(0).GetComponentInChildren<Image>();
-			var slotText = slot.slotGO.GetComponentInChildren<TextMeshProUGUI>();
-
-			if (slot.ItemObject.Item.Id >= 0)
-			{
-				slotImage.sprite = slot.ItemObject.Item.Sprite;
-				slotImage.color = new Color(1, 1, 1, 1);
-				slotText.text = slot.amount == 1 ? "" : slot.amount.ToString("n0");
-			}
-			else
-			{
-				slotImage.sprite = null;
-				slotImage.color = new Color(0, 0, 0, 0);
-				slotText.text = "";
-			}
-		}
-	}
 }
+	//public void ClearSlots()
+	//{
+	//	for (int i = 0; i < Slots.Length; i++)
+	//	{
+	//		Slots[i].ClearSlot();
+	//	}
+	//}
+
+	#region Save and load method 
+	//[ContextMenu("Save")]
+	//public void Save()
+	//{
+	//	IFormatter formatter = new BinaryFormatter();
+	//	Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
+	//	formatter.Serialize(stream, Container);
+	//	stream.Close();
+	//}
+
+	//[ContextMenu("load")]
+	//public void Load()
+	//{
+	//	if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+	//	{
+	//		IFormatter formatter = new BinaryFormatter();
+	//		Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
+	//		InventoryContainer newContainer = (InventoryContainer)formatter.Deserialize(stream);
+	//		for (int i = 0; i < Slots.Length; i++)
+	//		{
+	//			Slots[i].UpdateSlot(newContainer.Slots[i].ItemObject, newContainer.Slots[i].amount);
+	//		}
+	//		stream.Close();
+	//	}
+	//}
+	#endregion
+
+	//public int CountEmptySlots()
+	//{
+	//	//Moet een do-while zijn. Bespaard computer kracht door maar 1 cel te hoeven vinden in plaats van 24.
+	//	int counter = 0;
+	//	for (int i = 0; i < slots.Length; i++)
+	//	{
+	//		if (slots[i].ItemObject == null)
+	//		{
+	//			counter++;
+	//		}
+	//	}
+	//	return counter;
+	//}
+
