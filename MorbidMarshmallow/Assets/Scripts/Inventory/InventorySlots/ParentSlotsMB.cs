@@ -38,16 +38,17 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		slot.UpdateSlotDisplay();
 	}
 
-	private void SwapItems(InventorySlot slot)
+	private void SwapItems(InventorySlot slot1)
 	{
-		InventorySlot mouseHoverSlotData = MouseObject.slotMouseIsOver.slots[MouseObject.slotHoveredOver];
+		InventorySlot slot2 = MouseObject.parentSlotContainer.slots[MouseObject.slotHoveredOver];
 
-		inventorySO.SwapSlots(slot, mouseHoverSlotData);
+		inventorySO.SwapSlots(slot1, slot2);
 	}
 
 	public void OnEnter(GameObject slotGO)
 	{
 		MouseObject.slotHoveredOver = slotGO;
+		MouseObject.parentSlotContainer = this;
 		if (!_dragging)
 		{
 			var slot = slots[slotGO];
@@ -63,50 +64,54 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	public void OnExit(GameObject slotGO)
 	{
 		MouseObject.slotHoveredOver = null;
+		MouseObject.parentSlotContainer = null;	
 
 		DescriptionMB.DestroyDescription();
 	}
 
-	protected void OnDragStart(GameObject slot)
+	protected void OnDragStart(GameObject draggedSlot)
 	{
-		MouseObject.tempItemBeingDragged = TempItemMB.Create(this, slots[slot].ItemObject.Item);
+		if (slots[draggedSlot].ItemObject  != null)
+			MouseObject.tempItemBeingDragged = TempItemMB.Create(slots[draggedSlot].ItemObject.Item); //this, de this is voor de interfaceMB, maar die heb ik er nu uitgegooid.
 	}
 
-	protected void OnDragEnd(GameObject slotGO)
+	protected void OnDragEnd(GameObject draggedSlot)
 	{
-		var slot = slots[slotGO];
+		var slot = slots[draggedSlot];
 		var itemObject = slot.ItemObject;
-
 		_dragging = false;
 		Destroy(MouseObject.tempItemBeingDragged);
 
-		if (MouseObject.interfaceMouseIsOver == null && itemObject.Item.Id >= 0) //Goede aanpassing? (in plaats van 2 if's)
+		if(itemObject != null)
 		{
-			for (int i = 0; i < slot.amount; i++)
+			if (MouseObject.interfaceMouseIsOver == null && itemObject.Item.Id >= 0)
 			{
-				GroundItemMB.Create(itemObject.Item.ItemSO);
+				for (int i = 0; i < slot.amount; i++)
+				{
+					GroundItemMB.Create(itemObject.Item.ItemSO);
+				}
+
+				slot.ClearSlot();
+				return;
 			}
 
-			slot.ClearSlot();
-			return;
-		}
-
-		if (MouseObject.slotHoveredOver)
-		{
-			SwapItems(slot);
+			if (MouseObject.slotHoveredOver)
+			{
+				SwapItems(slot);
+			}
 		}
 	}
 
-	protected void OnDrag(GameObject slot)
+	protected void OnDrag(GameObject draggedSlot)
 	{
 		_dragging = true;
 		var tempItemBeingDragged = MouseObject.tempItemBeingDragged;
-		var mousePosition = MouseObject.GetPosition(); 
 
 		if (tempItemBeingDragged != null)
 		{
+			var mousePosition = MouseObject.GetPosition(); 
+
 			TempItemMB.Move(tempItemBeingDragged, mousePosition);
-			//tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
 		}
 	}
 

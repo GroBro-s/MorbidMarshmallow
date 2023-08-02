@@ -2,7 +2,6 @@
 * Grobros
 * https://github.com/GroBro-s/MorbidMarshmallow
 */
-using UnityEngine;
 
 public class StackableItem : BaseItem
 {

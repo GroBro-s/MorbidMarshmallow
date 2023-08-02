@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 1630317256, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
+  sprite: {fileID: 1630317256, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
+  itemName: 
+  id: 2
   type: 4
   description: Mushroom are an ingredient in creating poisenous mushrooms.
-  item:
-    Name: 
-    Id: 2
-    Type: 0

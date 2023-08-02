@@ -19,27 +19,18 @@ namespace Inventory
 
 		public GameObject lickerInventory;
 		public InventorySO inventorySO;
-
-		public InventorySO inventoryObject;
 		public ScriptableObject database;
 
 		public void Update()
 		{
-			for (int i = 0; i < inventoryObject.slots.Length; i++)
+			for (int i = 0; i < inventorySO.slots.Length; i++)
 			{
-				var slot = inventoryObject.slots[i];
+				var slot = inventorySO.slots[i];
 				var itemObject = slot.ItemObject;
 
 				if (itemObject != null && itemObject.Item.Id >= 0)
 				{
-					MakeGroundItem(slot);
-
-					//var newItemType = lickableItems[item.Type];
-					//slot.item.Type = newItemType;
-
-					////var amount = lickerInventory.GetAmount(i);
-					//item.Type = newItemType;
-
+					//MakeGroundItem(slot);
 				}
 			}
 		}
@@ -55,15 +46,6 @@ namespace Inventory
 			slot.ClearSlot();
 		}
 
-		//public void GetNewItemData(ItemSO itemObject)
-		//{
-		//	if (itemObject.id >= 0)
-		//	{
-
-		//	}
-		//	//normalDatabase.ItemObjects[inputItem].item
-		//}
-
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
 			lickerInventory.SetActive(true);
@@ -72,7 +54,6 @@ namespace Inventory
 		private void OnTriggerExit2D(Collider2D collision)
 		{
 			lickerInventory.SetActive(false);
-			//InventoryContainer.Clear();
 		}
 	}
 }

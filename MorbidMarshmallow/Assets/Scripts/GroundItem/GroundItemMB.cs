@@ -10,83 +10,37 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 {
 	[SerializeField]
 	public ItemSO itemSO;
-	//public int amount = 1;
+	private static Transform canvas;
+	private static GameObject _itemPrefab;
 	public bool looted = false;
+
+
+	private void Start()
+	{
+		var gameController = GameObject.Find("GameController");
+		_itemPrefab = gameController.GetComponent<GameStatsMB>().groundItemPrefab;
+		canvas = gameController.GetComponent<GameStatsMB>().canvas;
+	}
 
 	public GroundItemMB(ItemSO itemSO)
 	{
 		this.itemSO = itemSO;
 	}
 
-
 	public static GameObject Create(ItemSO itemSO)
 	{
-		var newGroundItem = CreateNewGroundItem(itemSO);
-		// spawnPos = GetSpawnPosition();
+		var newGroundItem = Instantiate(_itemPrefab, Vector2.zero, Quaternion.identity);
 
-		newGroundItem.transform.SetPositionAndRotation(GetSpawnPosition(), Quaternion.identity);  //spawnPos <- heb ik uit de SetPositionAndRotation gehaald en in 1 keer gedaan, is dit handig?
+		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
+		newGroundItem.GetComponent<SpriteRenderer>().sprite = itemSO.sprite;
 
+		newGroundItem.transform.SetParent(canvas, true);
+		newGroundItem.transform.SetPositionAndRotation(GetSpawnPosition(), Quaternion.identity);
+		
+		//var newGroundItem = CreateNewGroundItem(itemSO);
 		//CreateSpriteInChild(newGroundItem.transform, itemSO);
 
 		return newGroundItem;
-	}
-
-	private static GameObject CreateNewGroundItem(ItemSO itemSO)
-	{
-		var newGroundItem = new GameObject { name = "Item" }; //ItemSO kan in 1 keer worden toegevoegd met functie zie regel 12
-
-		SetCollectablesAsParent(newGroundItem);
-
-		AddBoxCollider2DWithTrigger(newGroundItem);
-		AddGroundItemWithItemSO(newGroundItem, itemSO); //kan dit in 1 keer?
-														//groundItemObject.amount = slot.amount;
-
-		CreateSpriteInChild(newGroundItem.transform, itemSO);
-
-		return newGroundItem;
-	}
-
-	private static Transform SetCollectablesAsParent(GameObject newGroundItem)
-	{
-		return newGroundItem.transform.parent = GameObject.Find("Collectables").transform;
-	}
-
-	private static GameObject AddBoxCollider2DWithTrigger(GameObject newGroundItem)
-	{
-		newGroundItem.AddComponent<BoxCollider2D>().isTrigger = true;
-		return newGroundItem;
-	}
-
-	private static GameObject AddGroundItemWithItemSO(GameObject newGroundItem, ItemSO itemSO)
-	{
-		newGroundItem.AddComponent<GroundItemMB>().itemSO = itemSO;
-		return newGroundItem;
-	}
-
-	private static void CreateSpriteInChild(Transform groundItemTransform, ItemSO itemSO) //GameObject groundItem, ItemObject itemObject //GameObject groundItem of Transform groundItemTransform??
-	{
-		var childObject = new GameObject() { name = "Sprite" };
-
-		AddSpriteRenderer(childObject, itemSO);
-		AddTransformInfo(childObject.transform, groundItemTransform);
-	}
-
-	private static GameObject AddSpriteRenderer(GameObject childObject, ItemSO itemSO)
-	{
-		childObject.AddComponent<SpriteRenderer>();
-		childObject.GetComponent<SpriteRenderer>().sprite = itemSO.sprite;
-		childObject.GetComponent<SpriteRenderer>().sortingLayerName = "Items";
-
-		return childObject;
-	}
-
-	private static Transform AddTransformInfo(Transform childTransform, Transform ParentTransform)
-	{
-		childTransform.parent = ParentTransform;
-		childTransform.position = ParentTransform.position;
-		childTransform.localScale = new Vector3(4, 4, 1);
-
-		return childTransform;
 	}
 
 	private static Vector2 GetSpawnPosition()
@@ -123,3 +77,61 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 #endif
 	}
 }
+
+//private static GameObject CreateNewGroundItem(ItemSO itemSO)
+//{
+//	var newGroundItem = new GameObject { name = "Item" }; //ItemSO kan in 1 keer worden toegevoegd met functie zie regel 12
+
+//	SetCollectablesAsParent(newGroundItem);
+
+//	AddBoxCollider2DWithTrigger(newGroundItem);
+//	AddGroundItemWithItemSO(newGroundItem, itemSO); //kan dit in 1 keer?
+//													//groundItemObject.amount = slot.amount;
+
+//	CreateSpriteInChild(newGroundItem.transform, itemSO);
+
+//	return newGroundItem;
+//}
+
+//private static Transform SetCollectablesAsParent(GameObject newGroundItem)
+//{
+//	return newGroundItem.transform.parent = GameObject.Find("Collectables").transform;
+//}
+
+//private static GameObject AddBoxCollider2DWithTrigger(GameObject newGroundItem)
+//{
+//	newGroundItem.AddComponent<BoxCollider2D>().isTrigger = true;
+//	return newGroundItem;
+//}
+
+//private static GameObject AddGroundItemWithItemSO(GameObject newGroundItem, ItemSO itemSO)
+//{
+//	newGroundItem.AddComponent<GroundItemMB>().itemSO = itemSO;
+//	return newGroundItem;
+//}
+
+//private static void CreateSpriteInChild(Transform groundItemTransform, ItemSO itemSO) //GameObject groundItem, ItemObject itemObject //GameObject groundItem of Transform groundItemTransform??
+//{
+//	var childObject = new GameObject() { name = "Sprite" };
+
+//	AddSpriteRenderer(childObject, itemSO);
+//	AddTransformInfo(childObject.transform, groundItemTransform);
+//}
+
+//private static GameObject AddSpriteRenderer(GameObject childObject, ItemSO itemSO)
+//{
+//	childObject.AddComponent<SpriteRenderer>();
+//	childObject.GetComponent<SpriteRenderer>().sprite = itemSO.sprite;
+//	childObject.GetComponent<SpriteRenderer>().sortingLayerName = "Items";
+
+//	return childObject;
+//}
+
+//private static Transform AddTransformInfo(Transform childTransform, Transform ParentTransform)
+//{
+//	childTransform.parent = ParentTransform;
+//	childTransform.position = ParentTransform.position;
+//	childTransform.localScale = new Vector3(4, 4, 1);
+
+//	return childTransform;
+//}
