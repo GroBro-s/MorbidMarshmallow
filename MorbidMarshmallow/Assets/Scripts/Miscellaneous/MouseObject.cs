@@ -7,7 +7,7 @@ using UnityEngine;
 public static class MouseObject
 {
 	public static UserInterfaceMB interfaceMouseIsOver;
-	public static ParentSlotsMB slotMouseIsOver;
+	public static ParentSlotsMB parentSlotContainer;
 	public static GameObject tempItemBeingDragged;
 	public static GameObject slotHoveredOver;
 
@@ -21,7 +21,7 @@ public static class MouseObject
 		interfaceMouseIsOver = userInterface.GetComponent<UserInterfaceMB>();
 	}
 
-	public static void OnExitInterface(GameObject userInterface)
+	public static void OnExitInterface()
 	{
 		interfaceMouseIsOver = null;
 	}

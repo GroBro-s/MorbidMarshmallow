@@ -22,7 +22,7 @@ namespace Inventory
 	}
 }
 
-//Opslaan en laden van de inventory
+//Opslaan, laden en clearen van de inventory
 //private void Update()
 //{
 //	if (Input.GetKeyDown(KeyCode.LeftShift))

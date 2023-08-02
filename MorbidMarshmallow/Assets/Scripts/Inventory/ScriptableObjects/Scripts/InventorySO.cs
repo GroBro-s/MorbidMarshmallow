@@ -66,9 +66,9 @@ namespace Inventory
 		public void SwapSlots(InventorySlot slot1, InventorySlot slot2)
 		{
 			var item1 = slot1.ItemObject.Item;
-			var item2 = slot2.ItemObject.Item;
+			var item2 = slot2.ItemObject?.Item;
 
-			if (item1.Id == item2.Id && slot1 != slot2)
+			if (item1.Id == item2?.Id && slot1 != slot2)
 			{
 				var isStackable = item1.Stackable;
 
