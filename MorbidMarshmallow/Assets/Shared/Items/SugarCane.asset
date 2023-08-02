@@ -15,7 +15,7 @@ MonoBehaviour:
   sprite: {fileID: 517249606, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
   itemName: 
-  id: 5
+  id: 4
   type: 0
   description: Sugarcanes are the essential part of de sharp sugarcane because of
     the perfect belance between toughness and sharpness.

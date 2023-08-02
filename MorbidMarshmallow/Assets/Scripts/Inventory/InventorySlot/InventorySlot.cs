@@ -4,14 +4,12 @@
 */
 
 using UnityEngine;
-using static Inventory.InventorySO;
 
 namespace Inventory
 {
 	[System.Serializable]
 	public class InventorySlot
 	{
-
 		public ItemType[] AllowedItems = new ItemType[0];
 		[System.NonSerialized]
 		public UserInterfaceMB parent;
@@ -38,7 +36,6 @@ namespace Inventory
 		//}
 		#endregion
 
-		//kan deze weg?
 		public InventorySlot(ItemObject itemObject, int amount)
 		{
 			UpdateSlot(itemObject, amount);

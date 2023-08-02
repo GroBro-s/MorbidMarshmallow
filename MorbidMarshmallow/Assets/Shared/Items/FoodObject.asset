@@ -15,7 +15,7 @@ MonoBehaviour:
   sprite: {fileID: -141366367, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 1
   itemName: 
-  id: 0
+  id: 6
   type: 6
   description: A foodItem can be used to heal yourself. Even though we really recommend
     not eating because you ofcourse want to die.

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: Weight
   m_EditorClassIdentifier: 
-  sprite: {fileID: -793860216, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
+  sprite: {fileID: 21300000, guid: 7ed276557847dcf45b040256064e7ce9, type: 2}
   stackable: 1
   itemName: 
-  id: 6
+  id: 0
   type: 2
   description: Add enough of these weights together to make a really heavy, dangerous,
     big weight.
