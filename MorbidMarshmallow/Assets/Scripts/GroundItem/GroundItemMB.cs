@@ -7,19 +7,18 @@ using UnityEditor;
 using UnityEngine;
 
 public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
-{
-	[SerializeField]
-	public ItemSO itemSO;
-	private static Transform canvas;
+{	
+	private static Transform _collectables;
 	private static GameObject _itemPrefab;
-	public bool looted = false;
 
+	public ItemSO itemSO;
 
 	private void Start()
 	{
-		var gameController = GameObject.Find("GameController");
-		_itemPrefab = gameController.GetComponent<GameStatsMB>().groundItemPrefab;
-		canvas = gameController.GetComponent<GameStatsMB>().canvas;
+		//var gameController = GameObject.Find("GameController");
+		var gameStatsMB = GameObject.Find("GameController").GetComponent<GameStatsMB>();
+		_itemPrefab = gameStatsMB.groundItemPrefab;
+		_collectables = gameStatsMB.collectables;
 	}
 
 	public GroundItemMB(ItemSO itemSO)
@@ -29,26 +28,20 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 
 	public static GameObject Create(ItemSO itemSO)
 	{
-		var newGroundItem = Instantiate(_itemPrefab, Vector2.zero, Quaternion.identity);
+		var newGroundItem = Instantiate(_itemPrefab, GetSpawnPosition(), Quaternion.identity, _collectables);
 
 		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
 		newGroundItem.GetComponent<SpriteRenderer>().sprite = itemSO.sprite;
-
-		newGroundItem.transform.SetParent(canvas, true);
-		newGroundItem.transform.SetPositionAndRotation(GetSpawnPosition(), Quaternion.identity);
-		
-		//var newGroundItem = CreateNewGroundItem(itemSO);
-		//CreateSpriteInChild(newGroundItem.transform, itemSO);
 
 		return newGroundItem;
 	}
 
 	private static Vector2 GetSpawnPosition()
 	{
-		var playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		var playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
 		var offset = GetOffset();
 
-		return new Vector2(playerTransform.transform.position.x + offset, playerTransform.transform.position.y);
+		return new Vector2(playerPos.x + offset, playerPos.y);
 	}
 
 	private static float GetOffset()
@@ -77,6 +70,19 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 #endif
 	}
 }
+
+
+
+
+
+
+
+//newGroundItem.transform.SetPositionAndRotation(GetSpawnPosition(), Quaternion.identity);
+
+//var newGroundItem = CreateNewGroundItem(itemSO);
+//CreateSpriteInChild(newGroundItem.transform, itemSO);
+
+
 
 //private static GameObject CreateNewGroundItem(ItemSO itemSO)
 //{

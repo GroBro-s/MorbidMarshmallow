@@ -12,33 +12,32 @@ namespace Inventory
 	public class PlayerInventoryMB : ParentInventoryMB
 	{
 		#region variables
-		public InventorySO inventorySO;
-
+		//public InventorySO inventorySO;
+		public GameObject playerInventoryUI;
 		#endregion
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			SetGroundItemToInventorySlot(collision);
-		}
-
-		private void SetGroundItemToInventorySlot(Collider2D collision) //TransferGroundItemToInventory
-		{
 			if (collision.TryGetComponent<GroundItemMB>(out var groundItem))
 			{
-				//var collidedItemSO = new ItemSO(groundItem.itemSO);
-				//voor nu is amount altijd hetzelfde want ieder in-game item komt overeen met 1 inventory-item.
-				//als dit niet meer het geval is moet dit systeem aangepast worden.
-				var itemObject = new ItemObject(groundItem.itemSO);
-				if (inventorySO.AddItem(itemObject))
-				{
-					Destroy(collision.gameObject);
-				}
+				SetGroundItemToInventorySlot(collision, groundItem);
 			}
 		}
 
-		private void OnApplicationQuit()
+		private void SetGroundItemToInventorySlot(Collider2D collision, GroundItemMB groundItem) //TransferGroundItemToInventory
 		{
-			ClearSlots(this.inventorySO);
+			//voor nu is amount altijd hetzelfde want ieder in-game item komt overeen met 1 inventory-item.
+			//als dit niet meer het geval is moet dit systeem aangepast worden.
+			var itemObject = new ItemObject(groundItem.itemSO);
+			if (playerInventoryUI.GetComponent<DynamicSlotsMB>().AddItem(itemObject))
+			{
+				Destroy(collision.gameObject);
+			}
 		}
+
+		//private void OnApplicationQuit()
+		//{
+		//	ClearSlots(this.inventorySO);
+		//}
 	}
 }

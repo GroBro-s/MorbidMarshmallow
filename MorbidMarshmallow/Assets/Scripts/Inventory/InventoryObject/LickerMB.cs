@@ -10,50 +10,57 @@ namespace Inventory
 {
 	public class LickerMB : ParentInventoryMB
 	{
-		public Dictionary<ItemType, ItemType> lickableItems = new Dictionary<ItemType, ItemType>()
-		{
-			{ItemType.SugarCane, ItemType.SharpSugarcane},
-			{ItemType.Weight, ItemType.HeavyWeight},
-			{ItemType.Mushroom, ItemType.PoisenousMushroom}
-		};
-
-		public GameObject lickerInventory;
-		public InventorySO inventorySO;
-		public ScriptableObject database;
-
-		public void Update()
-		{
-			for (int i = 0; i < inventorySO.slots.Length; i++)
-			{
-				var slot = inventorySO.slots[i];
-				var itemObject = slot.ItemObject;
-
-				if (itemObject != null && itemObject.Item.Id >= 0)
-				{
-					//MakeGroundItem(slot);
-				}
-			}
-		}
-
-		private void OnApplicationQuit()
-		{
-			ClearSlots(this.inventorySO);
-		}
-
-		private void MakeGroundItem(InventorySlot slot)
-		{
-			GroundItemMB.Create(slot.ItemObject.Item.ItemSO);
-			slot.ClearSlot();
-		}
+		[SerializeField] private GameObject lickerInventoryUI;
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			lickerInventory.SetActive(true);
+			lickerInventoryUI.SetActive(true);
 		}
 
 		private void OnTriggerExit2D(Collider2D collision)
 		{
-			lickerInventory.SetActive(false);
+			lickerInventoryUI.SetActive(false);
 		}
 	}
 }
+
+
+
+
+#region Mislukt beginsel licker
+
+//public Dictionary<ItemType, ItemType> lickableItems = new Dictionary<ItemType, ItemType>()
+//{
+//	{ ItemType.SugarCane, ItemType.SharpSugarcane},
+//	{ ItemType.Weight, ItemType.HeavyWeight},
+//	{ ItemType.Mushroom, ItemType.PoisenousMushroom}
+//};
+
+//public void Update()
+//{
+//	for (int i = 0; i < slots.Length; i++)
+//	{
+//		var slot = slots[i];
+//		var itemObject = slot.ItemObject;
+
+//		if (itemObject != null && itemObject.Item.Id >= 0)
+//		{
+//			//MakeGroundItem(slot);
+//		}
+//	}
+//}
+
+//private void MakeGroundItem(InventorySlot slot)
+//{
+//	GroundItemMB.Create(slot.ItemObject.Item.ItemSO);
+//	slot.ClearSlot();
+//}
+#endregion
+
+//public ScriptableObject database;
+//public InventorySO inventorySO;
+
+//private void OnApplicationQuit()
+//{
+//	ClearSlots(this.inventorySO);
+//}

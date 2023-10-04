@@ -17,7 +17,9 @@ public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 		for (int i = 0; i < ItemSOlist.Length; i++)
 		{
 			if (ItemSOlist[i].id != i)
+			{
 				ItemSOlist[i].id = i;
+			}
 		}
 	}
 

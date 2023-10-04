@@ -99,7 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSO: {fileID: 11400000, guid: e0f5e8f6f67c4924ab2fb93afdc96d29, type: 2}
-  looted: 0
 --- !u!61 &7688896141371649546
 BoxCollider2D:
   m_ObjectHideFlags: 0

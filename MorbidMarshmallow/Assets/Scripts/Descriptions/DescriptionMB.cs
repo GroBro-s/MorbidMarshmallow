@@ -9,27 +9,25 @@ using UnityEngine;
 public class DescriptionMB : MonoBehaviour
 {
 	#region variables
-	public GameObject gameController;
-	public static GameObject descriptionPrefab;
-	public static Transform canvas;
+	private GameObject gameController;
+
+	private static GameObject descriptionPrefab;
+	private static Transform canvas;
+    private static GameObject descriptionGO;
 
 	private static readonly int _xOffset = 110;
 	private static readonly int _yOffset = 0;
 
 	private DescriptionMB _instance;
-    public static GameObject descriptionGO;
-
-	public TextMeshProUGUI text;
 	#endregion
 
 	#region unity functions
 	private void Start()
 	{
-		gameController = GameObject.FindGameObjectWithTag("GameController");
+		var gameStatsMB = GameObject.Find("GameController").GetComponent<GameStatsMB>();
 
-		var gameStats = gameController.GetComponent<GameStatsMB>();
-		descriptionPrefab = gameStats.descriptionPrefab;
-		canvas = gameStats.canvas;
+		descriptionPrefab = gameStatsMB.descriptionPrefab;
+		canvas = gameStatsMB.canvas;
 
 		CheckInstance();
 	}
@@ -53,15 +51,14 @@ public class DescriptionMB : MonoBehaviour
 		_instance = null;
 	}
 
-	public static GameObject Create(GameObject slotGO, ItemObject itemObject)
+	public static GameObject Create(Vector2 slotPos, string descriptionText)
 	{
-		var slotPosition = GetDescriptionPosition(slotGO);
 		descriptionGO = Instantiate(descriptionPrefab, Vector2.zero, Quaternion.identity, canvas);
+		descriptionGO.GetComponentInChildren<TextMeshProUGUI>().text = descriptionText;
 
 		var backGround = descriptionGO.transform.Find("BackGround");
-		backGround.GetComponent<RectTransform>().position = slotPosition;
+		backGround.GetComponent<RectTransform>().position = GetDescriptionPosition(slotPos);
 
-		descriptionGO.GetComponentInChildren<TextMeshProUGUI>().text = itemObject.Item.ItemSO.description;
 		return descriptionGO;
 	}
 
@@ -71,18 +68,18 @@ public class DescriptionMB : MonoBehaviour
 		//descriptionGO = null;
 	}
 
-	private static Vector2 GetDescriptionPosition(GameObject slotGO)
+	private static Vector2 GetDescriptionPosition(Vector2 slotPos)
 	{
 		float outerScreenBorder = Screen.width - 200;
 
-		var slotPosition = slotGO.transform.position;
+		var descriptionPos = slotPos;
 
-		slotPosition.x = slotPosition.x > outerScreenBorder
-			? slotPosition.x -= _xOffset
-			: slotPosition.x += _xOffset;
-		slotPosition.y = slotPosition.y -= _yOffset;
+		descriptionPos.x = descriptionPos.x > outerScreenBorder
+			? descriptionPos.x -= _xOffset
+			: descriptionPos.x += _xOffset;
+		descriptionPos.y = descriptionPos.y -= _yOffset;
 
-		return slotPosition;
+		return descriptionPos;
 	}
 	#endregion
 }

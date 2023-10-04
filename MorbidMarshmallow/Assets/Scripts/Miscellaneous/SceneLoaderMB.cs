@@ -11,9 +11,9 @@ using TMPro;
 
 public class SceneLoaderMB : MonoBehaviour
 {
-	public GameObject loadingScreen;
-	public Slider slider;
-	public TextMeshProUGUI progressText;
+	[SerializeField] private GameObject loadingScreen;
+	[SerializeField] private Slider slider;
+	[SerializeField] private TextMeshProUGUI progressText;
 
 	IEnumerator LoadAsynchronously(int scene)
 	{

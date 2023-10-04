@@ -7,7 +7,7 @@ using UnityEngine;
 public static class MouseObject
 {
 	public static UserInterfaceMB interfaceMouseIsOver;
-	public static ParentSlotsMB parentSlotContainer;
+	public static ParentSlotsMB parentSlotsMB;
 	public static GameObject tempItemBeingDragged;
 	public static GameObject slotHoveredOver;
 
@@ -19,6 +19,18 @@ public static class MouseObject
 	public static void OnEnterInterface(GameObject userInterface)
 	{
 		interfaceMouseIsOver = userInterface.GetComponent<UserInterfaceMB>();
+	}
+
+	public static void OnEnterSlot(GameObject slotGO, ParentSlotsMB parentSlotsMBInput)
+	{
+		slotHoveredOver = slotGO;
+		parentSlotsMB = parentSlotsMBInput; //Geen goede naam? Ik heb de Input zelf toegevoegd, anders krijg je namelijk een dubbele benaming.
+	}
+
+	public static void OnExitSlot()
+	{
+		slotHoveredOver = null;
+		parentSlotsMB = null;
 	}
 
 	public static void OnExitInterface()

@@ -4,12 +4,14 @@
 */
 using UnityEngine;
 
-public class GameStatsMB : MonoBehaviour 
+public class GameStatsMB : MonoBehaviour
 {
     #region Variables
     public GameObject descriptionPrefab;
     public GameObject groundItemPrefab;
     public GameObject tempItemPrefab;
     public Transform canvas;
+    public Transform collectables;
+    public ItemDatabaseSO ItemDatabaseSO;
     #endregion
 }

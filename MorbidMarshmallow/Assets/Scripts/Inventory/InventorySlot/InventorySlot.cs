@@ -35,7 +35,8 @@ namespace Inventory
 		//	}
 		//}
 		#endregion
-
+		public InventorySlot() {
+		}
 		public InventorySlot(ItemObject itemObject, int amount)
 		{
 			UpdateSlot(itemObject, amount);
@@ -66,7 +67,7 @@ namespace Inventory
 		{
 			var hasItem = AllowedItems.Length > 0 || itemObject != null || itemObject.Item.Id >= 0;
 			
-			return hasItem ? CheckAllowedItems(itemObject) : true;
+			return !hasItem || CheckAllowedItems(itemObject);
 		}
 
 		private bool CheckAllowedItems(ItemObject itemObject)

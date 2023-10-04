@@ -4,25 +4,29 @@
 */
 
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Inventory
 {
 	public class ParentInventoryMB : MonoBehaviour
 	{
-		#region Unity Methods
+		#region variables
+		[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
+		#endregion
 
-		public void ClearSlots(InventorySO inventory)
+		#region Unity Methods
+		private void Start()
 		{
-			for (int i = 0; i < inventory.slots.Length; i++)
-			{
-				inventory.slots[i].ClearSlot();
-			}
+			var gameController = GameObject.Find("GameController");
+			itemDatabaseSO = gameController.GetComponent<GameStatsMB>().ItemDatabaseSO;
 		}
 		#endregion
 	}
 }
 
-//Opslaan, laden en clearen van de inventory
+//Opslaan en laden van de inventory
+
+//public string savePath { get; set; }
 //private void Update()
 //{
 //	if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -38,11 +42,4 @@ namespace Inventory
 //		equipmentInventory.Load();
 //		lickerInventory.Load();
 //	}
-//}
-
-//private void OnApplicationQuit()
-//{
-//	playerInventory.ClearSlots();
-//	//equipmentInventory.ClearSlots();
-//	lickerInventory.ClearSlots();
 //}
